@@ -1,0 +1,16 @@
+.profile__button {
+    border: #fff solid 2px;
+    padding: 14px 64px;
+    justify-self: right;
+}
+
+@media (max-width: 320px) {
+    .profile__button {
+        box-sizing: content-box;
+        width: 16px;
+        height: 16px;
+        justify-self: center;
+        padding: 15px 131px;
+        border-radius: 2px;
+    }
+}

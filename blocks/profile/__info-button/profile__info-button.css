@@ -1,0 +1,12 @@
+.profile__info-button {
+    border: #fff solid 1px;
+    padding: 7px;
+}
+
+@media (max-width: 320px) {
+    .profile__info-button {
+        width: 5.5px;
+        height: 5.5px;
+        padding: 5px;
+    }
+}

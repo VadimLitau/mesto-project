@@ -1,0 +1,15 @@
+.root {
+    background-color: #000;
+    max-width: 880px;
+    margin: 0 auto;
+    color: #fff;
+    font-family: Inter, Arial, sans-serif;
+    /*
+    border: green solid 1px;*/
+}
+
+@media (max-width: 320px) {
+    .root {
+        min-width: 320px;
+    }
+}

@@ -1,0 +1,70 @@
+/*начало - общие стили*/
+
+@import url(../vendor/css/normalize.css);
+@import url(../vendor/fonts/fonts.css);
+@import url(../blocks/root/root.css);
+
+/*конец - общие стили*/
+
+
+/*___*/
+
+
+/*Начало - header*/
+
+@import url(../blocks/header/header.css);
+@import url(../blocks/header/__logo/header__logo.css);
+
+/*Конец - header*/
+
+
+/*___*/
+
+
+/*Начало - profile*/
+
+@import url(../blocks/profile/profile.css);
+@import url(../blocks/profile/__avatar/profile__avatar.css);
+@import url(../blocks/profile/__info/profile__info.css);
+@import url(../blocks/profile/__info-name/profile__info-name.css);
+@import url(../blocks/profile/__info-button/profile__info-button.css);
+@import url(../blocks/profile/__info-profession/profile__info-profession.css);
+@import url(../blocks/profile/__button/profile__button.css);
+
+/*Конец - profile*/
+
+
+/*___*/
+
+
+/*Начало - photo-gallery*/
+
+@import url(../blocks/photo-gallery/photo-gallery.css);
+
+/*Конец - photo-gallery*/
+
+
+/*___*/
+
+
+/*Начало - gallery-element*/
+
+@import url(../blocks/gallery-element/gallery-element.css);
+@import url(../blocks/gallery-element/__photo/gallery-element__photo.css);
+@import url(../blocks/gallery-element/__caption/gallery-element__caption.css);
+@import url(../blocks/gallery-element/__caption-name/gallery-element__caption-name.css);
+@import url(../blocks/gallery-element/__caption-like/gallery-element__caption-like.css);
+@import url(../blocks/gallery-element/__caption-link/gallery-element__caption-link.css);
+
+/*Конец - gallery-element*/
+
+
+/*__*/
+
+
+/*Начало - footer*/
+
+@import url(../blocks/footer/footer.css);
+@import url(../blocks/footer/__author/footer__author.css);
+
+/*Конец - footer*/
