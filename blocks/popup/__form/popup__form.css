@@ -1,0 +1,13 @@
+.popup__form {
+    background-color: #fff;
+    display: grid;
+    padding-bottom: 37px;
+    box-shadow: 0px 0px 25px rgba(0, 0, 0, 0.15);
+    border-radius: 10px;
+}
+
+@media (max-width: 500px) {
+    .popup__form {
+        padding-bottom: 25px;
+    }
+}

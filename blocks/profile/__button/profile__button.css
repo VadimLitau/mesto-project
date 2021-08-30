@@ -2,10 +2,18 @@
     border: #fff solid 2px;
     padding: 14px 64px;
     justify-self: right;
+    opacity: 1;
+    transition: 1s;
 }
 
-@media (max-width: 320px) {
+.profile__button:hover {
+    opacity: 0.6;
+    transition: 1s;
+}
+
+@media (max-width: 750px) {
     .profile__button {
+        margin: 0 auto;
         box-sizing: content-box;
         width: 16px;
         height: 16px;

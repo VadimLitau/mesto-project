@@ -1,0 +1,16 @@
+.popup__form-input {
+    width: 358px;
+    padding: 0 36px 13px;
+    border: 0;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+    text-align: left;
+}
+
+@media (max-width: 500px) {
+    .popup__form-input {
+        width: 238px;
+        padding: 0 22px 13px;
+    }
+}

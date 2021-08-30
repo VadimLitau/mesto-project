@@ -1,1 +1,16 @@
-.gallery-element__caption-link {}
+.gallery-element__caption-link {
+    opacity: 1;
+    transition: 1s;
+}
+
+.gallery-element__caption-link:hover {
+    opacity: 0.5;
+    transition: 1s;
+}
+
+.gallery-element__caption-link:active {
+    background-image: url(/images/gallery/like_black.svg);
+    background-repeat: no-repeat;
+    opacity: 1;
+    transition: 0ms;
+}
