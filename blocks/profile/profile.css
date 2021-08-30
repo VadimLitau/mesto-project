@@ -12,5 +12,6 @@
         grid-template-columns: 320px;
         grid-column-gap: 0px;
         justify-items: center;
+        justify-content: center;
     }
 }
