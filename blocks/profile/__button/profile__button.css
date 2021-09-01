@@ -1,9 +1,15 @@
 .profile__button {
     border: #fff solid 2px;
-    padding: 14px 64px;
-    justify-self: right;
+    background-image: url(../../../images/profile/cross_button.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #000;
     opacity: 1;
     transition: 1s;
+    width: 150px;
+    height: 50px;
+    padding: 0;
+    cursor: pointer;
 }
 
 .profile__button:hover {

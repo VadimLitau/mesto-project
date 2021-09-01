@@ -1,9 +1,18 @@
 .popup__cross {
-    position: relative;
-    bottom: 8px;
-    left: 438px;
+    background-image: url(../../../images/popup/CloseIcon.png);
+    background-repeat: no-repeat;
+    background-color: #000;
+    background-size: cover;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    z-index: 1;
     opacity: 1;
     transition: 1s;
+    position: relative;
+    top: -40px;
+    left: 438px;
 }
 
 .popup__cross:hover {
@@ -13,7 +22,9 @@
 
 @media (max-width: 500px) {
     .popup__cross {
-        bottom: 16px;
-        left: 252px;
+        width: 20px;
+        height: 20px;
+        left: 262px;
+        top: -36px;
     }
 }

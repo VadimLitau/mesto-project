@@ -18,87 +18,72 @@
             <img src="images/profile/avatar.jpg" alt="Аватар" class="profile__avatar">
             <div class="profile__info">
                 <h1 class="profile__info-name">Жак-Ив Кусто</h1>
-                <img src="images/profile/pen_edit.svg" alt="Редактировать профиль" class="profile__info-button">
+                <button class="profile__info-button"></button>
                 <h2 class="profile__info-profession">Исследователь океана</h2>
             </div>
-            <img src="images/profile/cross_button.svg" alt="Кнопка" class="profile__button">
+            <button class="profile__button"></button>
         </section>
         <section class="photo-gallery">
             <div class="gallery-element">
                 <img src="images/gallery/photo-1.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Карачаевск</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
             <div class="gallery-element">
+                <!--Четсно признаюсь, попробовал сделать списком, но голова уже не соображает, попроюу завтра на свежую голву воплотить это в жизнь-->
                 <img src="images/gallery/photo-2.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Гора Эльбрус</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
             <div class="gallery-element">
                 <img src="images/gallery/photo-3.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Домбай</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
             <div class="gallery-element">
                 <img src="images/gallery/photo-4.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Гора Эльбрус</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
             <div class="gallery-element">
                 <img src="images/gallery/photo-5.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Домбай</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
             <div class="gallery-element">
                 <img src="images/gallery/photo-6.jpg" alt="фото места" class="gallery-element__photo">
                 <div class="gallery-element__caption">
                     <h2 class="gallery-element__caption-name">Карачаево-Черкессия</h2>
-                    <a class="gallery-element__caption-link">
-                        <img src="images/gallery/like.svg" alt="Лайк" class="gallery-element__caption-like">
-                    </a>
+                    <button class="gallery-element__caption-like"></button>
                 </div>
             </div>
         </section>
         <!--popup_opened-->
         <section class="popup">
-            <div class="popup__background">
-            </div>
             <div class="popup__container">
-                <img src="images/popup/CloseIcon.png" alt="Закрыть" class="popup__cross">
-                <div class="popup__form">
-                    <h2 class="popup__form-title">Редактировать профиль</h2>
-                    <input type="text" name="name" required placeholder="Жак-Ив Кусто" class="popup__form-input">
-                    <hr class="popup__form-line">
-                    <input type="text" name="profession" required placeholder="Исследователь океана" class="popup__form-input">
-                    <hr class="popup__form-line">
-                    <p class="popup__form-button">Сохранить</p>
-                </div>
+                <button class="popup__cross"></button>
+                <h2 class="popup__form-title">Редактировать профиль</h2>
+                <form class="popup__form">
+                    <input type="text" name="name" required placeholder="Ваше имя" class="popup__form-input">
+                    <input type="text" name="profession" required placeholder="Ваша профессия" class="popup__form-input">
+                    <button class="popup__form-button">Сохранить</button>
+                </form>
             </div>
         </section>
     </main>
 
     <footer class="footer">
-        <p class="footer__author">&#169;2020 Mesto Russia</p>
+        <p class="footer__author">&#169;&nbsp; 2020 Mesto Russia</p>
     </footer>
 </body>
 

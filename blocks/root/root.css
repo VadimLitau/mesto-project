@@ -8,6 +8,12 @@
     border: green solid 1px;*/
 }
 
+@media (max-width: 1000px) {
+    .root {
+        max-width: 95%;
+    }
+}
+
 @media (max-width: 320px) {
     .root {
         min-width: 320px;

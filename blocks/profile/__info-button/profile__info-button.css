@@ -1,8 +1,14 @@
 .profile__info-button {
+    background-image: url(../../../images/profile/pen_edit.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #000;
     border: #fff solid 1px;
-    padding: 7px;
     opacity: 1;
     transition: 1s;
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
 }
 
 .profile__info-button:hover {
@@ -12,8 +18,7 @@
 
 @media (max-width: 750px) {
     .profile__info-button {
-        width: 5.5px;
-        height: 5.5px;
-        padding: 5px;
+        width: 18px;
+        height: 18px;
     }
 }
