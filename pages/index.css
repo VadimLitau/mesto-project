@@ -55,6 +55,7 @@
 @import url(../blocks/gallery-element/__caption-name/gallery-element__caption-name.css);
 @import url(../blocks/gallery-element/__caption-like/gallery-element__caption-like.css);
 @import url(../blocks/gallery-element/__caption-link/gallery-element__caption-link.css);
+@import url(../blocks/gallery-element/__item/gallery-element_item.css);
 
 /*Конец - gallery-element*/
 
@@ -75,7 +76,6 @@
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/_opened/popup_opened.css);
 @import url(../blocks/popup/__cross/popup__cross.css);
-@import url(../blocks/popup/__background/popup__background.css);
 @import url(../blocks/popup/__form/popup__form.css);
 @import url(../blocks/popup/__form-title/popup__form-title.css);
 @import url(../blocks/popup/__container/popup__container.css);

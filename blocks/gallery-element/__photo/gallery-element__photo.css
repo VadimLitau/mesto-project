@@ -1,3 +1,6 @@
 .gallery-element__photo {
     border-radius: 10px 10px 0 0;
+    padding: 0;
+    min-width: 282px;
+    min-height: 282px;
 }

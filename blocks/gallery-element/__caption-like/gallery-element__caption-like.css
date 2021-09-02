@@ -1,8 +1,9 @@
 .gallery-element__caption-like {
     background-image: url(../../../images/gallery/like.svg);
+    background-color: rgba(255, 255, 255, 0);
     background-repeat: no-repeat;
     background-size: auto;
-    margin-right: 20px;
+    padding-right: 36px;
     width: 22px;
     height: 19px;
     opacity: 1;

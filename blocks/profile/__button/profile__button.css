@@ -21,10 +21,9 @@
     .profile__button {
         margin: 0 auto;
         box-sizing: content-box;
-        width: 16px;
-        height: 16px;
+        width: 282px;
+        height: 50px;
         justify-self: center;
-        padding: 15px 131px;
         border-radius: 2px;
     }
 }
