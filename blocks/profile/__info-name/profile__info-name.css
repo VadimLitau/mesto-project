@@ -14,7 +14,8 @@
         font-size: 27px;
         line-height: 33px;
         padding-top: 26px;
-        /*
-        padding: 25px 0 10px 70px;*/
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }

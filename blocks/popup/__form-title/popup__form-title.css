@@ -1,6 +1,6 @@
 .popup__form-title {
     color: #000;
-    padding: 2px 64px 45px 36px;
+    padding: 34px 64px 45px 36px;
     font-style: normal;
     font-weight: 900;
     font-size: 24px;
@@ -10,7 +10,7 @@
 
 @media (max-width: 500px) {
     .popup__form-title {
-        padding: 1px 22px 73px;
+        padding: 25px 22px 73px;
         font-size: 18px;
         line-height: 22px;
     }

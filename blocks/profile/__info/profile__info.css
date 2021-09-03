@@ -12,6 +12,6 @@
         grid-template-columns: 189px 18px;
         grid-column-gap: 10px;
         grid-row-gap: 10px;
-        justify-items: center
+        justify-items: center;
     }
 }

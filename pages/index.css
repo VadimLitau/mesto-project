@@ -51,11 +51,11 @@
 
 @import url(../blocks/gallery-element/gallery-element.css);
 @import url(../blocks/gallery-element/__photo/gallery-element__photo.css);
-@import url(../blocks/gallery-element/__caption/gallery-element__caption.css);
 @import url(../blocks/gallery-element/__caption-name/gallery-element__caption-name.css);
 @import url(../blocks/gallery-element/__caption-like/gallery-element__caption-like.css);
 @import url(../blocks/gallery-element/__caption-link/gallery-element__caption-link.css);
 @import url(../blocks/gallery-element/__item/gallery-element_item.css);
+@import url(../blocks/gallery-element/__item/_down-radius/gallery-element_item_down-radius.css);
 
 /*Конец - gallery-element*/
 

@@ -10,10 +10,9 @@
     z-index: 1;
     opacity: 1;
     transition: 1s;
-    position: relative;
+    position: absolute;
     top: -40px;
-    left: 438px;
-    right: -438px;
+    right: -40px;
 }
 
 .popup__cross:hover {
@@ -25,8 +24,7 @@
     .popup__cross {
         width: 20px;
         height: 20px;
-        left: 262px;
-        right: -262px;
         top: -36px;
+        right: 0;
     }
 }

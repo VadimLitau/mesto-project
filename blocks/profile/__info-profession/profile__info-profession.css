@@ -13,5 +13,8 @@
         font-size: 14px;
         line-height: 17px;
         padding-bottom: 30px;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
     }
 }
