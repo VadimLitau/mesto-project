@@ -1,5 +1,5 @@
 .gallery-element__caption-name {
-    padding: 20px 15px 32px 21px;
+    padding: 25px 15px 20px 21px;
     /*Чтобы убрать разлет между элементами, паддинги пришлось подбирать вручную, чтобы соответствовали макету*/
     font-weight: 900;
     font-size: 24px;
@@ -12,7 +12,7 @@
 
 @media (max-width: 768px) {
     .gallery-element__caption-name {
-        padding-bottom: 30px;
+        padding-bottom: 26px;
         /*отступ в макете 31px, пришлось изменить на 30px. В противном случае к футеру сайта перекос был очень большой*/
     }
 }

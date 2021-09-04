@@ -1,0 +1,7 @@
+.gallery-element__item {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    background-color: #fff;
+    border-radius: 10px;
+}

@@ -53,9 +53,8 @@
 @import url(../blocks/gallery-element/__photo/gallery-element__photo.css);
 @import url(../blocks/gallery-element/__caption-name/gallery-element__caption-name.css);
 @import url(../blocks/gallery-element/__caption-like/gallery-element__caption-like.css);
-@import url(../blocks/gallery-element/__caption-link/gallery-element__caption-link.css);
-@import url(../blocks/gallery-element/__item/gallery-element_item.css);
-@import url(../blocks/gallery-element/__item/_down-radius/gallery-element_item_down-radius.css);
+@import url(../blocks/gallery-element/__item/gallery-element__item.css);
+@import url(../blocks/gallery-element/__wrap/gallery-element__wrap.css);
 
 /*Конец - gallery-element*/
 

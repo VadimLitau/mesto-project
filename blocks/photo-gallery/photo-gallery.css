@@ -1,18 +1,9 @@
 .photo-gallery {
     margin-top: 47px;
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 282px);
-    grid-template-rows: repeat(auto-fill, 361px);
-    justify-content: center;
-    grid-column-gap: 17px;
-    grid-row-gap: 20px;
 }
 
 @media (max-width: 320px) {
     .photo-gallery {
         margin-top: 36px;
-        grid-template-columns: 282px;
-        grid-template-rows: auto;
-        grid-column-gap: 0;
     }
 }

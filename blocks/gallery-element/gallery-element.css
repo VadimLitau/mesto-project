@@ -1,8 +1,21 @@
 .gallery-element {
-    max-width: 282px;
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    grid-row-gap: 20px;
+    grid-template-columns: repeat(auto-fill, 282px);
+    grid-template-rows: repeat(auto-fill, 361px);
+    grid-column-gap: 17px;
+    justify-content: center;
     margin: 0;
     padding: 0;
     list-style-type: none;
+    color: #000;
+}
+
+@media (max-width: 320px) {
+    .gallery-element {
+        margin-top: 36px;
+        grid-template-columns: 282px;
+        grid-template-rows: auto;
+        grid-column-gap: 0;
+    }
 }

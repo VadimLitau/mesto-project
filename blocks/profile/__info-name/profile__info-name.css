@@ -11,11 +11,9 @@
 
 @media (max-width: 750px) {
     .profile__info-name {
+        max-Width: 189px;
         font-size: 27px;
         line-height: 33px;
         padding-top: 26px;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
     }
 }
