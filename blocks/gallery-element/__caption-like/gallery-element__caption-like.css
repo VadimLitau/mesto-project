@@ -18,7 +18,7 @@
 }
 
 .gallery-element__caption-like:active {
-    background-image: url(/images/gallery/like_black.svg);
+    background-image: url(../../../images/gallery/like_black.svg);
     background-repeat: no-repeat;
     opacity: 1;
     transition: 0ms;
