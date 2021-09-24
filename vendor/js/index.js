@@ -119,12 +119,20 @@ function popupCardClose() {
 /*Конец - Форма добавление карточки console.log(popupAddCardClos);*/
 /*___________________________*/
 /*Начало - Добавление карточки*/
+const popupAddCardSubmitButton = popup_CloneAddCardOpen.querySelector('.popup__form-button');
 
-
-
-
-
-
-
-
+function addNewGalleryCard(evt) {
+    evt.preventDefault();
+    let nameNewCard = popup_CloneAddCardOpen.querySelector('#popup__firstInput').value;
+    let linkNewCard = popup_CloneAddCardOpen.querySelector('#popup__secondInput').value;
+    let newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true); /*копирование содержимого template*/
+    let galleryImage = newGalleryElement.querySelector('.gallery-element__photo'); /*получение элемента с изображением*/
+    let galleryText = newGalleryElement.querySelector('.gallery-element__caption-name'); /*получение элемента с текстом */
+    galleryImage.src = linkNewCard; /*замена изображения из объекта по умолчанию */
+    galleryText.textContent = nameNewCard; /*замена текста из объекта по умолчанию*/
+    gallery.prepend(newGalleryElement); /*добавление карточки галереи */
+    popup_CloneAddCardOpen.classList.remove('popup_opened');
+};
+popupAddCardSubmitButton.addEventListener('click', addNewGalleryCard);
 /*Конец - Добавление карточки*/
+/*___________________________*/
