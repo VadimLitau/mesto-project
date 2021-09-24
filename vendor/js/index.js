@@ -85,6 +85,19 @@ initialCards.forEach(function(item) {
     galleryImage.src = item.link; /*замена изображения из объекта по умолчанию */
     galleryText.textContent = item.name; /*замена текста из объекта по умолчанию*/
     gallery.append(newGalleryElement); /*добавление карточки галереи */
+    /*Начало - Анимация Лайка*/
+    const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
+
+    function editLike() {
+        galleryLike.classList.toggle('gallery-element__caption-like_active');
+    }
+    galleryLike.addEventListener('click', editLike);
+    /*Конец - Анимация Лайка*/
+
+
+
+
+
 });
 /*Конец - добавление элемента галлереи */
 /*___________________________*/
@@ -132,6 +145,14 @@ function addNewGalleryCard(evt) {
     galleryText.textContent = nameNewCard; /*замена текста из объекта по умолчанию*/
     gallery.prepend(newGalleryElement); /*добавление карточки галереи */
     popup_CloneAddCardOpen.classList.remove('popup_opened');
+    /*Начало - Анимация Лайка*/
+    const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
+
+    function editLike() {
+        galleryLike.classList.toggle('gallery-element__caption-like_active');
+    }
+    galleryLike.addEventListener('click', editLike);
+    /*Конец - Анимация Лайка*/
 };
 popupAddCardSubmitButton.addEventListener('click', addNewGalleryCard);
 /*Конец - Добавление карточки*/
