@@ -1,0 +1,19 @@
+.gallery-element__deletCard {
+    background-image: url(../../../images/gallery/delet_card.svg);
+    background-color: rgba(0, 0, 0, 0);
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 18px;
+    height: 19.3px;
+    opacity: 1;
+    transition: 1s;
+    cursor: pointer;
+    border: none;
+    position: absolute;
+    top: 18px;
+    right: 18px;
+}
+
+.gallery-element__deletCard:hover {
+    opacity: 0.6;
+}

@@ -94,10 +94,14 @@ initialCards.forEach(function(item) {
     galleryLike.addEventListener('click', editLike);
     /*Конец - Анимация Лайка*/
 
+    /*Начало - Удаление карточки*/
+    const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
 
-
-
-
+    function deletCard() {
+        newGalleryElement.remove();
+    };
+    galleryDeletCard.addEventListener('click', deletCard);
+    /*Конец - Удаление карточки*/
 });
 /*Конец - добавление элемента галлереи */
 /*___________________________*/
@@ -153,6 +157,15 @@ function addNewGalleryCard(evt) {
     }
     galleryLike.addEventListener('click', editLike);
     /*Конец - Анимация Лайка*/
+    /*___________________________*/
+    /*Начало - Удаление карточки*/
+    const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
+
+    function deletCard() {
+        newGalleryElement.remove();
+    };
+    galleryDeletCard.addEventListener('click', deletCard);
+    /*Конец - Удаление карточки*/
 };
 popupAddCardSubmitButton.addEventListener('click', addNewGalleryCard);
 /*Конец - Добавление карточки*/
