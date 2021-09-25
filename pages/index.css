@@ -84,3 +84,13 @@
 @import url(../blocks/popup/__form-button/popup__form-button.css);
 
 /*Конец - popup*/
+
+
+/*Начало - popup фотографий*/
+
+@import url(../blocks/popup-photo/popup-photo.css);
+@import url(../blocks/popup-photo/popup-photo_opened/popup-photo_opened.css);
+@import url(../blocks/popup-photo/__photo/popup-photo__photo.css);
+@import url(../blocks/popup-photo/__name/popup-photo__name.css);
+
+/*Конец - popup - фотографий*/

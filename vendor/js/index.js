@@ -77,6 +77,11 @@ const initialCards = [{
 
 const gallery = document.querySelector('.gallery-element'); /*получение элемента родителя галереи*/
 const galleryElement = document.querySelector('#photo-gallery__element').content; /*получение контента template */
+const popupPhoto = document.querySelector('.popup-photo'); /*Получение элемента popupPhoto */
+let popupPhotoImage = document.querySelector('.popup-photo__photo');
+let popupPhotoName = document.querySelector('.popup-photo__name');
+
+
 /*добавление карточек галереи по умолчанию*/
 initialCards.forEach(function(item) {
     let newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true); /*копирование содержимого template*/
@@ -102,6 +107,19 @@ initialCards.forEach(function(item) {
     };
     galleryDeletCard.addEventListener('click', deletCard);
     /*Конец - Удаление карточки*/
+    /* */
+    function showPhoto() {
+        popupPhoto.classList.add('popup-photo_opened');
+        popupPhotoImage.src = item.link;
+        popupPhotoName.textContent = item.name;
+    }
+    galleryImage.addEventListener('click', showPhoto);
+
+    function closePhoto() {
+        popupPhoto.classList.remove('popup-photo_opened');
+    }
+    popupPhoto.addEventListener('click', closePhoto);
+    /* */
 });
 /*Конец - добавление элемента галлереи */
 /*___________________________*/
@@ -166,6 +184,19 @@ function addNewGalleryCard(evt) {
     };
     galleryDeletCard.addEventListener('click', deletCard);
     /*Конец - Удаление карточки*/
+    /* */
+    function showPhoto() {
+        popupPhoto.classList.add('popup-photo_opened');
+        popupPhotoImage.src = linkNewCard;
+        popupPhotoName.textContent = nameNewCard;
+    }
+    galleryImage.addEventListener('click', showPhoto);
+
+    function closePhoto() {
+        popupPhoto.classList.remove('popup-photo_opened');
+    }
+    popupPhoto.addEventListener('click', closePhoto);
+    /* */
 };
 popupAddCardSubmitButton.addEventListener('click', addNewGalleryCard);
 /*Конец - Добавление карточки*/
