@@ -11,7 +11,9 @@
 **Технологии**
 
 Html, Css
+
 **Update:**
+
 Добавил к сайту JS
 
 **GitHub Pages**
