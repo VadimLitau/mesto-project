@@ -7,7 +7,7 @@ const popup_nameText = popup_name.textContent;
 const popup_nameId = document.getElementById('popup__idName');
 //ниже аналогия имени но с профессией
 const popup_profession = document.querySelector('.profile__info-profession');
-let popup_professionText = popup_profession.textContent;
+const popup_professionText = popup_profession.textContent;
 const popup_professionId = document.getElementById('popup__idProfession');
 //Конец - Заполнение полей форм popup
 //начало - открытие popup_opened
