@@ -92,5 +92,6 @@
 @import url(../blocks/popup-photo/popup-photo_opened/popup-photo_opened.css);
 @import url(../blocks/popup-photo/__photo/popup-photo__photo.css);
 @import url(../blocks/popup-photo/__name/popup-photo__name.css);
+@import url(../blocks/popup-photo/__wrap/popup-photo__wrap.css);
 
 /*Конец - popup - фотографий*/

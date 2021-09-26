@@ -1,6 +1,6 @@
 /*Начало - Заполнение полей форм popup*/
 const popup_name = document.querySelector('.profile__info-name'); /*получение элемента с именем профиля*/
-let popup_nameText = popup_name.textContent; /* получение текста имени профиля*/
+const popup_nameText = popup_name.textContent; /* получение текста имени профиля*/
 const popup_nameId = document.getElementById('popup__idName'); /*получение инпута имени попап */
 /*ниже аналогия имени но с профессией*/
 const popup_profession = document.querySelector('.profile__info-profession');
@@ -124,10 +124,11 @@ initialCards.forEach(function(item) {
 /*Конец - добавление элемента галлереи */
 /*___________________________*/
 /*Начало - Форма добавление карточки*/
-const popup_buttonAddCard = document.querySelector('.profile__button'); /*нашли кнопку открытия popup*/
+
 
 const popup_templateAddCardOpen = document.querySelector('#popup').content; /*template элемент popup */
 const popup_CloneAddCardOpen = popup_templateAddCardOpen.querySelector('.popup').cloneNode(true);
+const popup_buttonAddCard = document.querySelector('.profile__button'); /*нашли кнопку открытия popup*/
 const popupAddCardClos = popup_CloneAddCardOpen.querySelector('.popup__cross'); /*кнопка закрытия popup*/
 popup_buttonAddCard.addEventListener('click', popup_addCardOpen);
 popupAddCardClos.addEventListener('click', popupCardClose);
