@@ -1,0 +1,28 @@
+.popupAddCard__form-button {
+    color: #fff;
+    background-color: #000;
+    border: #000 solid 1px;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    padding: 14px 128px;
+    margin: 18px auto 0;
+    opacity: 1;
+    transition: 1s;
+    border-radius: 2px;
+    cursor: pointer;
+}
+
+.popupAddCard__form-button:hover {
+    opacity: 0.6;
+    transition: 1s;
+}
+
+@media (max-width: 768px) {
+    .popupAddCard__form-button {
+        font-size: 14px;
+        line-height: 17px;
+        padding: 15px 82px;
+        margin: 15px auto 0;
+    }
+}

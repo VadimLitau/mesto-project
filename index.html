@@ -21,18 +21,17 @@
                 <button type="button" class="profile__info-button"></button>
                 <h2 class="profile__info-profession">Исследователь океана</h2>
             </div>
-            <button type="button" class="profile__button"></button>
+            <button type="submit" class="profile__button"></button>
         </section>
         <section class="photo-gallery">
             <h2 style="display: none;">&nbsp;
                 <!--Валидатор успакойся. Костыль, главное не забыть убрать перед отправкой на ревью, а то атата-->
             </h2>
-
             <ul class="gallery-element">
             </ul>
         </section>
         <!--popup_opened-->
-        <section class="popup">
+        <section class="popup ">
             <div class="popup__container">
                 <button type="button" class="popup__cross"></button>
                 <h2 class="popup__form-title">Редактировать профиль</h2>
@@ -49,35 +48,35 @@
                 <!--Валидатор успакойся. Костыль, главное не забыть убрать перед отправкой на ревью, а то атата-->
             </h2>
             <div class="popup-photo__wrap">
-                <figure>
+                <figure class="popup-photo_miniFix">
+                    <button type="button" class="popup-photo__cross"></button>
                     <img class="popup-photo__photo" src="#" alt="фотография">
                     <figcaption class="popup-photo__name"></figcaption>
                 </figure>
+            </div>
+        </section>
+        <!--popupAddCard_opened-->
+        <section class="popupAddCard">
+            <div class="popupAddCard__container">
+                <button type="button" class="popupAddCard__cross"></button>
+                <h2 class="popupAddCard__form-title">Новое Место</h2>
+                <form class="popupAddCard__form" name="popupAddCard">
+                    <input type="text" name="popupAddCardName" required placeholder="Название" class="popupAddCard__form-input" id="popupAddCard__firstInput" value="">
+                    <input type="text" name="popupAddCardProfession" required placeholder="Ссылка на картинку" class="popupAddCard__form-input" id="popupAddCard__secondInput" value="">
+                    <button type="submit" class="popupAddCard__form-button">Создать</button>
+                </form>
             </div>
         </section>
     </main>
     <footer class="footer">
         <p class="footer__author">&#169;&nbsp; 2020 Mesto Russia</p>
     </footer>
-    <template id="popup">
-      <section class="popup">
-      <div class="popup__container">
-        <button type="button" class="popup__cross"></button>
-        <h2 class="popup__form-title"></h2>
-        <form class="popup__form" name="popup">
-          <input type="text" name="name" required placeholder="Ваше имя" class="popup__form-input" id="popup__firstInput" value="">
-          <input type="text" name="profession" required placeholder="Ваша профессия" class="popup__form-input" id="popup__secondInput" value="">
-          <button type="submit" class="popup__form-button">Сохранить</button>
-        </form>
-      </div>
-    </section>
-    </template>
     <template id="photo-gallery__element">
       <li class="gallery-element__item">
         <button type="button" class="gallery-element__deletCard"></button>
         <img alt="фото места" class="gallery-element__photo">         
           <div class="gallery-element__wrap">
-              <h2 class="gallery-element__caption-name">sss</h2>
+              <h2 class="gallery-element__caption-name"></h2>
               <button type="button" class="gallery-element__caption-like"></button>
           </div>
       </li>

@@ -1,0 +1,13 @@
+.popupAddCard__form {
+    padding: 0;
+    margin: 0;
+    padding-bottom: 37px;
+    display: flex;
+    flex-direction: column;
+}
+
+@media (max-width: 500px) {
+    .popupAddCard__form {
+        padding-bottom: 25px;
+    }
+}

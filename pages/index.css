@@ -86,6 +86,20 @@
 /*Конец - popup*/
 
 
+/*Начало - popupAddCard*/
+
+@import url(../blocks/popupAddCard/popupAddCard.css);
+@import url(../blocks/popupAddCard/_opened/popupAddCard_opened.css);
+@import url(../blocks/popupAddCard/__cross/popupAddCard__cross.css);
+@import url(../blocks/popupAddCard/__form/popupAddCard__form.css);
+@import url(../blocks/popupAddCard/__form-title/popupAddCard__form-title.css);
+@import url(../blocks/popupAddCard/__container/popupAddCard__container.css);
+@import url(../blocks/popupAddCard/__form-input/popupAddCard__form-input.css);
+@import url(../blocks/popupAddCard/__form-button/popupAddCard__form-button.css);
+
+/*Конец - popupAddCard*/
+
+
 /*Начало - popup фотографий*/
 
 @import url(../blocks/popup-photo/popup-photo.css);
@@ -93,5 +107,7 @@
 @import url(../blocks/popup-photo/__photo/popup-photo__photo.css);
 @import url(../blocks/popup-photo/__name/popup-photo__name.css);
 @import url(../blocks/popup-photo/__wrap/popup-photo__wrap.css);
+@import url(../blocks/popup-photo/__cross/popup-photo__cross.css);
+@import url(../blocks/popup-photo/_miniFix/popup-photo_miniFix.css);
 
 /*Конец - popup - фотографий*/

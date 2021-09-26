@@ -1,0 +1,19 @@
+.popupAddCard__form-input {
+    width: 358px;
+    border: 0;
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+    border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+    align-self: center;
+    padding-bottom: 10px;
+    margin-bottom: 28px;
+}
+
+@media (max-width: 500px) {
+    .popupAddCard__form-input {
+        width: 238px;
+        margin-bottom: 29px;
+        padding-bottom: 9px;
+    }
+}
