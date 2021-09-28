@@ -24,14 +24,11 @@
             <button type="submit" class="profile__button"></button>
         </section>
         <section class="photo-gallery">
-            <h2 style="display: none;">&nbsp;
-                <!--Валидатор успакойся. Костыль, главное не забыть убрать перед отправкой на ревью, а то атата-->
-            </h2>
             <ul class="gallery-element">
             </ul>
         </section>
         <!--popup_opened-->
-        <section class="popup ">
+        <article class="popup">
             <div class="popup__container">
                 <button type="button" class="popup__cross"></button>
                 <h2 class="popup__form-title">Редактировать профиль</h2>
@@ -41,12 +38,9 @@
                     <button type="submit" class="popup__form-button">Сохранить</button>
                 </form>
             </div>
-        </section>
+        </article>
         <!--popup-photo_opened-->
-        <section class="popup-photo">
-            <h2 style="display: none;">&nbsp;
-                <!--Валидатор успакойся. Костыль, главное не забыть убрать перед отправкой на ревью, а то атата-->
-            </h2>
+        <article class="popup-photo">
             <div class="popup-photo__wrap">
                 <figure class="popup-photo_miniFix">
                     <button type="button" class="popup-photo__cross"></button>
@@ -54,19 +48,19 @@
                     <figcaption class="popup-photo__name"></figcaption>
                 </figure>
             </div>
-        </section>
+        </article>
         <!--popupAddCard_opened-->
-        <section class="popupAddCard">
+        <article class="popupAddCard">
             <div class="popupAddCard__container">
                 <button type="button" class="popupAddCard__cross"></button>
-                <h2 class="popupAddCard__form-title">Новое Место</h2>
+                <h2 class="popupAddCard__form-title">Новое место</h2>
                 <form class="popupAddCard__form" name="popupAddCard">
                     <input type="text" name="popupAddCardName" required placeholder="Название" class="popupAddCard__form-input" id="popupAddCard__firstInput" value="">
-                    <input type="text" name="popupAddCardProfession" required placeholder="Ссылка на картинку" class="popupAddCard__form-input" id="popupAddCard__secondInput" value="">
+                    <input type="url" name="popupAddCardProfession" required placeholder="Ссылка на картинку" class="popupAddCard__form-input" id="popupAddCard__secondInput" value="">
                     <button type="submit" class="popupAddCard__form-button">Создать</button>
                 </form>
             </div>
-        </section>
+        </article>
     </main>
     <footer class="footer">
         <p class="footer__author">&#169;&nbsp; 2020 Mesto Russia</p>
