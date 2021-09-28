@@ -12,13 +12,13 @@ const popupInfoButton = document.querySelector('.profile__info-button');
 //кнопка для закрытия попап профиля
 const popupClosetButton = document.querySelector('.popup__cross');
 //сам попап профиля
-const popupProfile = document.querySelector('.popup');
+const popupProfile = document.querySelector('.popup_profile');
 //попап добавления карточки
-const popupCreateNewCard = document.querySelector('.popupAddCard');
+const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
 const popupButtonCreateCard = document.querySelector('.profile__button');
 //нашли кнопку закрытия popup добавления карточки
-const popupAddCardClos = document.querySelector('.popupAddCard__cross');
+const popupAddCardClos = document.querySelector('.popup_AddCard_cross');
 //получение элемента родителя галереи
 const gallery = document.querySelector('.gallery-element');
 //получение контента template
@@ -29,19 +29,19 @@ const jobInput = document.querySelector('#popup__idProfession');
 //получение элемента лайка из копии
 const galleryLike = document.querySelector('.gallery-element__caption-like');
 //получение кнопки для добавления карточки
-const addNewCard = document.querySelector('.popupAddCard__form-button');
+const addNewCard = document.querySelector('.popup_AddCard_form-button');
 //получение текста из попап для названия карточки
 const newCardText = document.querySelector('#popupAddCard__firstInput');
 //получение ссылки на изображение из попап для карточки
 const newCardLink = document.querySelector('#popupAddCard__secondInput');
 //получение родителя для показа фотографии
-const popupPhoto = document.querySelector('.popup-photo');
+const popupPhoto = document.querySelector('.popup__photo');
 //получение изображения для показа фотографии
-const popupPhotoImage = document.querySelector('.popup-photo__photo');
+const popupPhotoImage = document.querySelector('.popup__photo-image');
 //получение текста для показа изображения
-const popupPhotoName = document.querySelector('.popup-photo__name');
+const popupPhotoName = document.querySelector('.popup__photo-name');
 //получение элемента для закрытие попап показа изображения
-const popupPhotoClose = document.querySelector('.popup-photo__cross');
+const popupPhotoClose = document.querySelector('.popup_photo_cross');
 
 //объект попап профиля
 const popupInfo = {
@@ -53,7 +53,7 @@ const popupInfo = {
 //объект попап добавления карточки
 const popupCreateCard = {
     source: popupCreateNewCard,
-    class: 'popupAddCard_opened'
+    class: 'popup_opened'
 };
 //Начало - добавление элемента галлереи
 const initialCards = [{
@@ -119,14 +119,14 @@ function createCard(link, name) {
     });
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
-        popupPhoto.classList.add('popup-photo_opened');
+        popupPhoto.classList.add('popup_opened');
         popupPhotoImage.alt = name;
         popupPhotoImage.src = link;
         popupPhotoName.textContent = name;
     });
     //закрытие попап показа изображения
     popupPhotoClose.addEventListener('click', function() {
-        popupPhoto.classList.remove('popup-photo_opened');
+        popupPhoto.classList.remove('popup_opened');
     });
     copyCard = newGalleryElement;
     return copyCard;
@@ -171,6 +171,6 @@ formElement.addEventListener('submit', function(evt) {
 //добавление карточки и закрытие попап
 addNewCard.addEventListener('click', function(evt) {
     evt.preventDefault();
-    popupCreateNewCard.classList.remove('popupAddCard_opened');
+    popupCreateNewCard.classList.remove('popup_opened');
     createUserCard(newCardLink.value, newCardText.value)
 });
