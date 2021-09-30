@@ -42,19 +42,6 @@ const popupPhotoImage = document.querySelector('.popup__photo-image');
 const popupPhotoName = document.querySelector('.popup__photo-name');
 //получение элемента для закрытие попап показа изображения
 const popupPhotoClose = document.querySelector('.popup_photo_cross');
-
-//объект попап профиля
-const popupInfo = {
-    source: popupProfile,
-    class: 'popup_opened',
-    firstInput: popupNameId.value = popupName.textContent,
-    secondInput: popupProfessionId.value = popupProfession.textContent
-};
-//объект попап добавления карточки
-const popupCreateCard = {
-    source: popupCreateNewCard,
-    class: 'popup_opened'
-};
 //Начало - добавление элемента галлереи
 const initialCards = [{
         name: 'Архыз',
@@ -84,16 +71,12 @@ const initialCards = [{
 //Начало - открытие попапПрофиля
 //функция открытия попапов
 function showPopupProfile(item) {
-    item.source.classList.add(item.class);
-    item.firstInput;
-    item.secondInput;
+    item.classList.add('popup_opened');
 };
 //функция закрытия попапов
 function closeAllPopup(item) {
-    item.source.classList.remove(item.class);
+    item.classList.remove('popup_opened');
 }
-//Переменная для хранения шаблона карточки
-let copyCard;
 //Создание шаблона карточки
 function createCard(link, name) {
     //получение копии template элемента 
@@ -119,58 +102,58 @@ function createCard(link, name) {
     });
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
-        popupPhoto.classList.add('popup_opened');
+        showPopupProfile(popupPhoto)
         popupPhotoImage.alt = name;
         popupPhotoImage.src = link;
         popupPhotoName.textContent = name;
     });
-    //закрытие попап показа изображения
-    popupPhotoClose.addEventListener('click', function() {
-        popupPhoto.classList.remove('popup_opened');
-    });
-    copyCard = newGalleryElement;
-    return copyCard;
+    return newGalleryElement;
 };
 //Начало - добавление карточек галереи по умолчанию
 initialCards.forEach(function(item) {
-    createCard(item.link, item.name);
-    gallery.append(copyCard);
+    gallery.append(createCard(item.link, item.name));
 });
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 function createUserCard(userLink, userText) {
-    createCard(userLink, userText);
-    gallery.prepend(copyCard);
+    gallery.prepend(createCard(userLink, userText));
 }
 //Конец - Добавление карточки пользователем
 //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
-    showPopupProfile(popupInfo);
+    showPopupProfile(popupProfile);
+    nameInput.value = popupName.textContent;
+    jobInput.value = popupProfession.textContent;
 });
 //открытиу попап для добавления карточки
 popupButtonCreateCard.addEventListener('click', () => {
-    showPopupProfile(popupCreateCard);
+    showPopupProfile(popupCreateNewCard);
 });
 //закрытие для попап профиля
 popupClosetButton.addEventListener('click', () => {
-    closeAllPopup(popupInfo);
+    closeAllPopup(popupProfile);
+
 });
 //закрытие для попап Добавления карточки
 popupAddCardClos.addEventListener('click', () => {
-    closeAllPopup(popupCreateCard);
+    closeAllPopup(popupCreateNewCard);
+});
+//закрытие попап показа изображения
+popupPhotoClose.addEventListener('click', function() {
+    popupPhoto.classList.remove('popup_opened');
 });
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
     popupName.textContent = nameInput.value;
     popupProfession.textContent = jobInput.value;
-    popupProfile.classList.remove('popup_opened');
+    closeAllPopup(popupProfile);
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
 
 //добавление карточки и закрытие попап
-addNewCard.addEventListener('click', function(evt) {
+popupCreateNewCard.addEventListener('submit', function(evt) {
+    closeAllPopup(popupCreateNewCard);
+    createUserCard(newCardLink.value, newCardText.value);
     evt.preventDefault();
-    popupCreateNewCard.classList.remove('popup_opened');
-    createUserCard(newCardLink.value, newCardText.value)
 });
