@@ -1,0 +1,19 @@
+{
+  "name": "mesto-project",
+  "version": "0.0.1",
+  "description": "**Имя**",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VadimLitau/mesto-project.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VadimLitau/mesto-project/issues"
+  },
+  "homepage": "https://github.com/VadimLitau/mesto-project#readme"
+}
