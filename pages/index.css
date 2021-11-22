@@ -85,5 +85,6 @@
 @import url(../blocks/popup/__container/popup__container.css);
 @import url(../blocks/popup/__form-input/popup__form-input.css);
 @import url(../blocks/popup/__form-button/popup__form-button.css);
+@import url(../blocks/popup/__form-button/_disabled/popup__form-button_disabled.css);
 
 /*Конец - popup*/
