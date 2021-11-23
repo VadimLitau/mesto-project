@@ -10,6 +10,15 @@
     margin-bottom: 28px;
 }
 
+.popup__form-input:invalid {
+    border-bottom: rgba(255, 0, 0, 1) solid 1px;
+    /* красная рамка для некорректных данных */
+}
+
+.popup__form-input:valid {
+    border-bottom: rgba(0, 0, 0, 0.2) solid 1px;
+}
+
 @media (max-width: 500px) {
     .popup__form-input {
         width: 238px;

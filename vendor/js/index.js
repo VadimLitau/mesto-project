@@ -174,3 +174,7 @@ for (let i = 0; i < popups.length; i++) {
         };
     });
 };
+
+if (popupNameId.validity.valid && popupProfessionId.validity.valid) {
+    alert('kurwa');
+}
