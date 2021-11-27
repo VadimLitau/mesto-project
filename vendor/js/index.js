@@ -175,6 +175,60 @@ for (let i = 0; i < popups.length; i++) {
     });
 };
 
-if (popupNameId.validity.valid && popupProfessionId.validity.valid) {
-    alert('kurwa');
+// Валидация инпутов
+// const formElement = document.querySelector('.popup__form'); - formElement-.form
+
+// выведите validity в консоль
+formElement.querySelector('.popup__form-input').addEventListener('input', function(evt) {
+    console.log(evt.target.validity.valid)
+});
+
+//добавление класса с ошибкой
+const showInputError = (formElement, inputElement, errorMessage) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.add('popup__form-input_type_error'); //form__input_type_error
+    errorElement.textContent = errorMessage;
+    errorElement.classList.add('popup__form-input-error_active'); //form__input-error_active
+};
+
+//удаление класса с ошибкой
+const hideInputError = (formElement, inputElement) => {
+    const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
+    inputElement.classList.remove('popup__form-input_type_error'); //form__input_type_error
+    errorElement.textContent = '';
+    errorElement.classList.remove('popup__form-input-error_active'); //form__input-error_active
 }
+
+//проверка валидности поля
+const isValid = (formElement, inputElement) => {
+        if (!inputElement.validity.valid) {
+            showInputError(formElement, inputElement, inputElement.validationMessage);
+        } else {
+            hideInputError(formElement, inputElement);
+        }
+    }
+    //добавим слушатель для всех полей в форме
+const setEventListeners = (formElement) => {
+    const inputList = Array.from(formElement.querySelectorAll('.popup__form-input'));
+    inputList.forEach((inputElement) => {
+        inputElement.addEventListener('input', () => {
+            isValid(formElement, inputElement)
+        });
+        inputElement.addEventListener('input', function(evt) {
+            console.log(evt.target.validity.valid)
+        });
+    });
+};
+
+//найдем все формы и добавим им обработчики
+const enableValidation = () => {
+    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    formList.forEach((formElement) => {
+        formElement.addEventListener('submit', (evt) => {
+            evt.preventDefault();
+        });
+        setEventListeners(formElement);
+    });
+};
+
+enableValidation();
