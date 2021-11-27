@@ -102,7 +102,6 @@ function createCard(link, name) {
     });
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
-        showPopupProfile(popupPhoto)
         popupPhotoImage.alt = name;
         popupPhotoImage.src = link;
         popupPhotoName.textContent = name;
@@ -121,9 +120,10 @@ function createUserCard(userLink, userText) {
 //Конец - Добавление карточки пользователем
 //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
+    enableValidation();
     showPopupProfile(popupProfile);
-    nameInput.value = popupName.textContent;
-    jobInput.value = popupProfession.textContent;
+    nameInput.value = '';
+    jobInput.value = '';
 });
 //открытиу попап для добавления карточки
 popupButtonCreateCard.addEventListener('click', () => {
@@ -210,12 +210,12 @@ const isValid = (formElement, inputElement) => {
     //добавим слушатель для всех полей в форме
 const setEventListeners = (formElement) => {
     const inputList = Array.from(formElement.querySelectorAll('.popup__form-input'));
+    const buttonElement = formElement.querySelector('.popup__form-button');
+    toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
-            isValid(formElement, inputElement)
-        });
-        inputElement.addEventListener('input', function(evt) {
-            console.log(evt.target.validity.valid)
+            isValid(formElement, inputElement);
+            toggleButtonState(inputList, buttonElement);
         });
     });
 };
@@ -230,5 +230,23 @@ const enableValidation = () => {
         setEventListeners(formElement);
     });
 };
+
+
+//настройка проверки валидации полей для изменения действия кнопки
+const hasInvalidInput = (inputlist) => {
+    return inputlist.some((inputElement) => {
+        return !inputElement.validity.valid;
+    })
+};
+
+//изменение состояния кнопки
+
+const toggleButtonState = (inputList, buttonElement) => {
+    if (hasInvalidInput(inputList)) {
+        buttonElement.classList.add('popup__form-button_disabled');
+    } else {
+        buttonElement.classList.remove('popup__form-button_disabled');
+    }
+}
 
 enableValidation();
