@@ -102,6 +102,7 @@ function createCard(link, name) {
     });
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
+        showPopupProfile(popupPhoto);
         popupPhotoImage.alt = name;
         popupPhotoImage.src = link;
         popupPhotoName.textContent = name;
