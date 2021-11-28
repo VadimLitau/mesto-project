@@ -180,24 +180,25 @@ for (let i = 0; i < popups.length; i++) {
 // const formElement = document.querySelector('.popup__form'); - formElement-.form
 
 // выведите validity в консоль
+/*
 formElement.querySelector('.popup__form-input').addEventListener('input', function(evt) {
     console.log(evt.target.validity.valid)
 });
-
+*/
 //добавление класса с ошибкой
 const showInputError = (formElement, inputElement, errorMessage) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.add('popup__form-input_type_error'); //form__input_type_error
+    inputElement.classList.add(validParams.inputErrorClass); //form__input_type_error
     errorElement.textContent = errorMessage;
-    errorElement.classList.add('popup__form-input-error_active'); //form__input-error_active
+    errorElement.classList.add(validParams.inputErrorClassActive); //form__input-error_active
 };
 
 //удаление класса с ошибкой
 const hideInputError = (formElement, inputElement) => {
     const errorElement = formElement.querySelector(`.${inputElement.id}-error`);
-    inputElement.classList.remove('popup__form-input_type_error'); //form__input_type_error
+    inputElement.classList.remove(validParams.inputErrorClass); //form__input_type_error
     errorElement.textContent = '';
-    errorElement.classList.remove('popup__form-input-error_active'); //form__input-error_active
+    errorElement.classList.remove(validParams.inputErrorClassActive); //form__input-error_active
 }
 
 //проверка валидности поля
@@ -210,8 +211,8 @@ const isValid = (formElement, inputElement) => {
     }
     //добавим слушатель для всех полей в форме
 const setEventListeners = (formElement) => {
-    const inputList = Array.from(formElement.querySelectorAll('.popup__form-input'));
-    const buttonElement = formElement.querySelector('.popup__form-button');
+    const inputList = Array.from(formElement.querySelectorAll(validParams.inputSelector));
+    const buttonElement = formElement.querySelector(validParams.submitButtonSelector);
     toggleButtonState(inputList, buttonElement);
     inputList.forEach((inputElement) => {
         inputElement.addEventListener('input', () => {
@@ -223,7 +224,7 @@ const setEventListeners = (formElement) => {
 
 //найдем все формы и добавим им обработчики
 const enableValidation = () => {
-    const formList = Array.from(document.querySelectorAll('.popup__form'));
+    const formList = Array.from(document.querySelectorAll(validParams.formSelector));
     formList.forEach((formElement) => {
         formElement.addEventListener('submit', (evt) => {
             evt.preventDefault();
@@ -244,10 +245,18 @@ const hasInvalidInput = (inputlist) => {
 
 const toggleButtonState = (inputList, buttonElement) => {
     if (hasInvalidInput(inputList)) {
-        buttonElement.classList.add('popup__form-button_disabled');
+        buttonElement.classList.add(validParams.inactiveButtonClass);
     } else {
-        buttonElement.classList.remove('popup__form-button_disabled');
+        buttonElement.classList.remove(validParams.inactiveButtonClass);
     }
 }
 
-enableValidation();
+enableValidation(validParams = {
+    formSelector: '.popup__form', //validParams.formSelector
+    inputSelector: '.popup__form-input', //validParams.inputSelector
+    submitButtonSelector: '.popup__form-button', //validParams.submitButtonSelector
+    inactiveButtonClass: 'popup__form-button_disabled', //validParams.inactiveButtonClass
+    inputErrorClass: 'popup__form-input_type_error', //validParams.inputErrorClass
+    inputErrorClassActive: 'popup__form-input-error_active', //validParams.inputErrorClassActive
+    errorClass: 'popup__error_visible' //validParams.errorClass
+});
