@@ -14,8 +14,8 @@ import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupPr
 //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
     showPopupProfile(popupProfile);
-    nameInput.value = '';
-    jobInput.value = '';
+    nameInput.value = popupName.textContent;
+    jobInput.value = popupProfession.textContent;
 });
 //открытиу попап для добавления карточки
 popupButtonCreateCard.addEventListener('click', () => {
@@ -51,18 +51,3 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 overClose();
 //вызов валидации форм
 enableValidation(validParams);
-
-//запросы к серверу
-fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-        }
-    })
-    .then((res) => {
-        return res = res.json();
-    })
-    .then((data) => {
-        document.querySelector('.profile__info-name').textContent = data.name;
-        document.querySelector('.profile__info-profession').textContent = data.about;
-        document.querySelector('.profile__avatar').src = data.avatar;
-    });

@@ -1,15 +1,4 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
-
-function servReq() {
-    return fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-            }
-        })
-        .then((res) => {
-            return res = res.json();
-        })
-};
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -35,7 +24,6 @@ const popupPhotoName = document.querySelector('.popup__photo-name');
 //получение элемента для закрытие попап показа изображения
 const popupPhotoClose = document.querySelector('.popup_photo_cross');
 //Начало - добавление элемента галлереи
-/*
 const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -60,10 +48,9 @@ const initialCards = [{
         name: 'Байкал',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
-];*/
-
+];
 //Создание шаблона карточки
-const createCard = (servLink, servName) => {
+const createCard = (link, name) => {
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
     //получение изображение из копии
@@ -74,17 +61,10 @@ const createCard = (servLink, servName) => {
     const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
     //получение элемента корзины новой карточки
     const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
-    //получение массива с карточками от сервера
-    servReq()
-        .then((data) => {
-            console.log(data),
-                galleryImage.alt = data[servName].name,
-                galleryImage.src = data[servLink].link,
-                galleryText.textContent = data[servName].name
-        });
-    //galleryImage.alt = name;
-    //galleryImage.src = link;
-    //galleryText.textContent = name;
+    //получение массива с карточками от сервера   
+    galleryImage.alt = name;
+    galleryImage.src = link;
+    galleryText.textContent = name;
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         galleryLike.classList.toggle('gallery-element__caption-like_active');
@@ -96,16 +76,16 @@ const createCard = (servLink, servName) => {
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
         showPopupProfile(popupPhoto);
-        popupPhotoImage.alt = galleryImage.alt;
-        popupPhotoImage.src = galleryImage.src;
-        popupPhotoName.textContent = galleryText.textContent
+        popupPhotoImage.alt = name;
+        popupPhotoImage.src = link;
+        popupPhotoName.textContent = name;
     });
     return newGalleryElement;
 };
 //Начало - добавление карточек галереи по умолчанию
-for (let i = 0; i < 6; i++) {
-    gallery.append(createCard(i, i));
-}
+initialCards.forEach(function(item) {
+    gallery.append(createCard(item.link, item.name));
+});
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText) => {

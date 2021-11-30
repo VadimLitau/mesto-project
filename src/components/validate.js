@@ -53,9 +53,11 @@ const hasInvalidInput = (inputlist) => {
 const toggleButtonState = (inputList, buttonElement) => {
         if (hasInvalidInput(inputList)) {
             buttonElement.classList.add(validParams.inactiveButtonClass);
+            buttonElement.type = 'button';
         } else {
             buttonElement.classList.remove(validParams.inactiveButtonClass);
-        }
+            buttonElement.type = 'submit'; /*не знаю насколько это изящно, зато рабоает)))*/
+        };
     }
     //параметры для валидации форм
 const validParams = {
