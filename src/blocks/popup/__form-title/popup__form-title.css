@@ -10,7 +10,7 @@
 
 @media (max-width: 500px) {
     .popup__form-title {
-        padding: 25px 22px 73px;
+        padding: 25px 22px 33px;
         font-size: 18px;
         line-height: 22px;
     }

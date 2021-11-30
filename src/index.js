@@ -1,13 +1,15 @@
+//импорт css файла для webpack
+import './pages/index.css'
 //общий импорт
-import { showPopupProfile, closeAllPopup } from './utils.js';
+import { showPopupProfile, closeAllPopup } from './components/utils.js';
 //импорт валидации форм
-import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './validate.js';
+import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './components/validate.js';
 //импорт добавления карточек
-import { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, initialCards, createCard, createUserCard } from './cards.js';
+import { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createCard, createUserCard } from './components/cards.js';
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
-import { popups, overClose } from './overClose.js';
+import { popups, overClose } from './components/overClose.js';
 //Заполнение полей форм popup
-import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './modal.js';
+import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './components/modal.js';
 //Начало - открытие попапПрофиля
 //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
@@ -49,3 +51,18 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 overClose();
 //вызов валидации форм
 enableValidation(validParams);
+
+//запросы к серверу
+fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
+        headers: {
+            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
+        }
+    })
+    .then((res) => {
+        return res = res.json();
+    })
+    .then((data) => {
+        document.querySelector('.profile__info-name').textContent = data.name;
+        document.querySelector('.profile__info-profession').textContent = data.about;
+        document.querySelector('.profile__avatar').src = data.avatar;
+    });

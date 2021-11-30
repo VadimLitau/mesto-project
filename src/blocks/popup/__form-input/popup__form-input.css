@@ -25,7 +25,7 @@
 @media (max-width: 500px) {
     .popup__form-input {
         width: 238px;
-        margin-bottom: 29px;
+        margin-bottom: 5px;
         padding-bottom: 9px;
     }
 }
