@@ -7,11 +7,19 @@ import { validParams, showInputError, hideInputError, isValid, setEventListeners
 //импорт добавления карточек
 import { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createCard, createUserCard } from './components/cards.js';
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
-import { popups, overClose } from './components/overClose.js';
+import { escPopWrapClose, escPopupClose } from './components/overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './components/modal.js';
 //Начало - открытие попапПрофиля
-//открытие popup для профиля
+const popups = document.querySelectorAll('.popup')
+popups.forEach((popup) => {
+        popup.addEventListener('click', (evt) => {
+            if (evt.target.classList.contains('popup__cross') || evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__photo_wrap')) {
+                closeAllPopup(popup)
+            }
+        })
+    })
+    //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
     showPopupProfile(popupProfile);
     nameInput.value = popupName.textContent;
@@ -22,13 +30,16 @@ popupButtonCreateCard.addEventListener('click', () => {
     showPopupProfile(popupCreateNewCard);
 });
 //закрытие для попап профиля
+/*
 popupClosetButton.addEventListener('click', () => {
     closeAllPopup(popupProfile);
-});
+});*/
 //закрытие попап показа изображения
+/*
 popupPhotoClose.addEventListener('click', function() {
     popupPhoto.classList.remove('popup_opened');
 });
+*/
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
     popupName.textContent = nameInput.value;
@@ -37,17 +48,21 @@ formElement.addEventListener('submit', function(evt) {
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
+/*
 //закрытие для попап Добавления карточки
 popupAddCardClos.addEventListener('click', () => {
     closeAllPopup(popupCreateNewCard);
 });
+*/
 //добавление карточки и закрытие попап
 popupCreateNewCard.addEventListener('submit', function(evt) {
     closeAllPopup(popupCreateNewCard);
     createUserCard(newCardLink.value, newCardText.value);
+    newCardLink.value = '';
+    newCardText.value = '';
+    document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
+    document.querySelector('.popup_AddCard_form-button').type = 'button';
     evt.preventDefault();
 });
-//вызов закрытия через оверлей
-overClose();
 //вызов валидации форм
 enableValidation(validParams);
