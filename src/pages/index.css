@@ -57,6 +57,9 @@
 @import url(../blocks/gallery-element/__item/gallery-element__item.css);
 @import url(../blocks/gallery-element/__wrap/gallery-element__wrap.css);
 @import url(../blocks/gallery-element/__deletCard/gallery-element__deletCard.css);
+@import url(../blocks/gallery-element/__likes-wrap/gallery-element__likes-wrap.css);
+@import url(../blocks/gallery-element/__like-counter/gallery-element__like-counter.css);
+@import url(../blocks/gallery-element/__deletCard/_notDelete/gallery-element__deletCard_notDelete.css);
 
 /*Конец - gallery-element*/
 

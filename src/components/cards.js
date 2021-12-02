@@ -1,15 +1,11 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
 
-function servReq() {
-    return fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-            }
-        })
-        .then((res) => {
-            return res = res.json();
-        })
-};
+const servReq =
+    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
+        headers: {
+            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
+        }
+    });
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -63,7 +59,7 @@ const initialCards = [{
 ];*/
 
 //Создание шаблона карточки
-const createCard = (servLink, servName) => {
+const createServCard = (servLink, servName, serLike, servId) => {
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
     //получение изображение из копии
@@ -74,17 +70,58 @@ const createCard = (servLink, servName) => {
     const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
     //получение элемента корзины новой карточки
     const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
-    //получение массива с карточками от сервера
-    servReq()
-        .then((data) => {
-            console.log(data),
-                galleryImage.alt = data[servName].name,
-                galleryImage.src = data[servLink].link,
-                galleryText.textContent = data[servName].name
-        });
-    //galleryImage.alt = name;
-    //galleryImage.src = link;
-    //galleryText.textContent = name;
+    //получение элемента счетчика лайков
+    const galleryCounterLikes = newGalleryElement.querySelector('.gallery-element__like-counter');
+
+    //получение массива с карточками от сервера  
+    galleryImage.alt = servName,
+        galleryImage.src = servLink,
+        galleryText.textContent = servName,
+        galleryCounterLikes.textContent = serLike;
+    //реакция и замена вида лайка при клике
+    galleryLike.addEventListener('click', function() {
+        galleryLike.classList.toggle('gallery-element__caption-like_active');
+    });
+    if (servId != '3382b6ac0c72abf176e18b90') {
+        galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
+    } else {
+        galleryDeletCard.classList.remove('gallery-element__deletCard_notDelete');
+    }
+    //реакция на щелчек по корзине - удаление карточки       
+    galleryDeletCard.addEventListener('click', function() {
+        newGalleryElement.remove();
+    });
+    /*
+    //удалим элемент корзины из копии карточки
+    galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
+    */
+    //реакция на нажатие на изображение и открытие попап
+    galleryImage.addEventListener('click', function() {
+        showPopupProfile(popupPhoto);
+        popupPhotoImage.alt = galleryImage.alt;
+        popupPhotoImage.src = galleryImage.src;
+        popupPhotoName.textContent = galleryText.textContent
+    });
+    return newGalleryElement;
+};
+
+//Создание шаблона карточки
+const userCard = (userLink, userText) => {
+    //получение копии template элемента 
+    const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
+    //получение изображение из копии
+    const galleryImage = newGalleryElement.querySelector('.gallery-element__photo');
+    //получение текста из копии
+    const galleryText = newGalleryElement.querySelector('.gallery-element__caption-name');
+    //Получение лайка в новой карточке
+    const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
+    //получение элемента корзины новой карточки
+    const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
+
+    //получение массива с карточками от сервера 
+    galleryImage.alt = userText;
+    galleryImage.src = userLink;
+    galleryText.textContent = userText;
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         galleryLike.classList.toggle('gallery-element__caption-like_active');
@@ -103,13 +140,29 @@ const createCard = (servLink, servName) => {
     return newGalleryElement;
 };
 //Начало - добавление карточек галереи по умолчанию
-for (let i = 0; i < 6; i++) {
-    gallery.append(createCard(i, i));
-}
+servReq.then((res) => { return res.json(); })
+    .then((data) => {
+        console.log(data[0].owner._id);
+        console.log(data);
+        data.forEach(function(item) {
+            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id));
+        })
+    });
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText) => {
-        gallery.prepend(createCard(userLink, userText));
+        fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
+            method: 'POST',
+            headers: {
+                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: userText,
+                link: userLink
+            })
+        });
+        gallery.prepend(userCard(userLink, userText));
     }
     //Конец - Добавление карточки пользователем
-export { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createCard, createUserCard };
+export { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard, userCard };
