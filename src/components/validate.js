@@ -56,8 +56,10 @@ const toggleButtonState = (inputList, buttonElement) => {
             buttonElement.type = 'button';
         } else {
             buttonElement.classList.remove(validParams.inactiveButtonClass);
+
             buttonElement.type = 'submit';
         }
+
     }
     //параметры для валидации форм
 const validParams = {
