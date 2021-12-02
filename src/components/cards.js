@@ -30,8 +30,15 @@ const popupPhotoImage = document.querySelector('.popup__photo-image');
 const popupPhotoName = document.querySelector('.popup__photo-name');
 //получение элемента для закрытие попап показа изображения
 const popupPhotoClose = document.querySelector('.popup_photo_cross');
+//мой id
+const myId = '3382b6ac0c72abf176e18b90';
+//попап удаления карточки
+const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
-/*
+const deleteButton = document.querySelector('.popup__deleteCard_btn');
+
+
+/* 
 const initialCards = [{
         name: 'Архыз',
         link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
@@ -59,7 +66,7 @@ const initialCards = [{
 ];*/
 
 //Создание шаблона карточки
-const createServCard = (servLink, servName, serLike, servId) => {
+const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
     //получение изображение из копии
@@ -77,34 +84,72 @@ const createServCard = (servLink, servName, serLike, servId) => {
     galleryImage.alt = servName,
         galleryImage.src = servLink,
         galleryText.textContent = servName,
-        galleryCounterLikes.textContent = serLike;
+        galleryCounterLikes.textContent = serLike,
+        newGalleryElement.id = servPhotoId;
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         galleryLike.classList.toggle('gallery-element__caption-like_active');
     });
-    if (servId != '3382b6ac0c72abf176e18b90') {
-        galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
-    } else {
+    //добавлять или нет элемент корзины на карточку
+    if (servId === myId) {
         galleryDeletCard.classList.remove('gallery-element__deletCard_notDelete');
+    } else {
+        galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
     }
-    //реакция на щелчек по корзине - удаление карточки       
-    galleryDeletCard.addEventListener('click', function() {
-        newGalleryElement.remove();
-    });
-    /*
-    //удалим элемент корзины из копии карточки
-    galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
-    */
+    //удаление элемента галереи
+    function deletTemCard() {
+        delCard(newGalleryElement);
+        showPopupProfile(popupDeleteCard); //console.log(newGalleryElement.id)
+        //newGalleryElement.remove();
+        galleryDeletCard.removeEventListener('click', deletTemCard);
+    };
+    galleryDeletCard.addEventListener('click', deletTemCard);
+
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
         showPopupProfile(popupPhoto);
         popupPhotoImage.alt = galleryImage.alt;
         popupPhotoImage.src = galleryImage.src;
-        popupPhotoName.textContent = galleryText.textContent
+        popupPhotoName.textContent = galleryText.textContent;
     });
     return newGalleryElement;
 };
 
+
+function delCard(item) {
+    const hoba = item;
+    /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
+    function gtg() {
+        console.log(hoba.id)
+        hoba.remove();
+        console.log('kurwa')
+        closeAllPopup(popupDeleteCard);
+        fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/' + hoba.id, {
+            method: 'DELETE',
+            headers: {
+                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+            },
+        });
+        document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
+    }
+    document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg);
+}
+/*
+function delServCard(hoba) {
+    
+
+}*/
+/*
+
+    */
+
+/*
+deleteButton.addEventListener('click', (evt) => { //61a8a900ed37330012af131d
+
+    })*/
+//- удаление карточки  - newGalleryElement.remove();
+//evt.target.classList.contains('popup_deleteCard_btn') ||
+/*
 //Создание шаблона карточки
 const userCard = (userLink, userText) => {
     //получение копии template элемента 
@@ -139,13 +184,12 @@ const userCard = (userLink, userText) => {
     });
     return newGalleryElement;
 };
+*/
 //Начало - добавление карточек галереи по умолчанию
 servReq.then((res) => { return res.json(); })
     .then((data) => {
-        console.log(data[0].owner._id);
-        console.log(data);
-        data.forEach(function(item) {
-            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id));
+        data.reverse().forEach(function(item) {
+            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id));
         })
     });
 //Конец - добавление карточек галереи по умолчанию
@@ -162,7 +206,9 @@ const createUserCard = (userLink, userText) => {
                 link: userLink
             })
         });
-        gallery.prepend(userCard(userLink, userText));
+        gallery.prepend(createServCard(userLink, userText, undefined, myId));
     }
     //Конец - Добавление карточки пользователем
-export { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard, userCard };
+
+
+export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
