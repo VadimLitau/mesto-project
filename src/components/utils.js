@@ -1,8 +1,10 @@
 import { escPopupClose } from "./overClose";
+import { delCard } from "./cards";
 //функция открытия попапов
 const showPopupProfile = (item) => {
     item.classList.add('popup_opened');
     document.addEventListener('keydown', escPopupClose);
+
     //document.addEventListener('click', escPopupClose);
 };
 //функция закрытия попапов

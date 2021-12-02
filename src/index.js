@@ -5,12 +5,13 @@ import { showPopupProfile, closeAllPopup } from './components/utils.js';
 //импорт валидации форм
 import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './components/validate.js';
 //импорт добавления карточек
-import { popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard, userCard } from './components/cards.js';
+import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard } from './components/cards.js';
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
 import { escPopupClose } from './components/overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './components/modal.js';
 //Начало - открытие попап
+//все элементы попап
 const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
         popup.addEventListener('click', (evt) => {
