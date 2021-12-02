@@ -1,0 +1,4 @@
+.gallery-element__likes-wrap {
+    display: flex;
+    flex-direction: column;
+}

@@ -1,5 +1,4 @@
 import { escPopupClose } from "./overClose";
-
 //функция открытия попапов
 const showPopupProfile = (item) => {
     item.classList.add('popup_opened');
