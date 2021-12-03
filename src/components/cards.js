@@ -52,11 +52,12 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     const galleryCounterLikes = newGalleryElement.querySelector('.gallery-element__like-counter');
 
     //получение массива с карточками от сервера  
-    galleryImage.alt = servName,
-        galleryImage.src = servLink,
-        galleryText.textContent = servName,
-        galleryCounterLikes.textContent = serLike,
-        newGalleryElement.id = servPhotoId;
+    galleryImage.alt = servName;
+    galleryImage.src = servLink;
+    galleryText.textContent = servName;
+    galleryCounterLikes.textContent = serLike;
+
+    newGalleryElement.id = servPhotoId;
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         galleryLike.classList.toggle('gallery-element__caption-like_active');
@@ -122,7 +123,7 @@ const createUserCard = (userLink, userText) => {
             },
             body: JSON.stringify({
                 name: userText,
-                link: userLink
+                link: userLink,
             })
         })
 
@@ -131,7 +132,7 @@ const createUserCard = (userLink, userText) => {
                 return res.json()
             };
         }).then((data) => {
-            gallery.prepend(createServCard(data.link, data.name, data.likes.length, data.owner._id, data._id));
+            gallery.prepend(createServCard(data.link, data.name, undefined, data.owner._id, data._id));
 
         });
     }
