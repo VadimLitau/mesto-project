@@ -36,35 +36,6 @@ const myId = '3382b6ac0c72abf176e18b90';
 const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
-
-
-/* 
-const initialCards = [{
-        name: 'Архыз',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-    },
-    {
-        name: 'Челябинская область',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-    },
-    {
-        name: 'Иваново',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-    },
-    {
-        name: 'Камчатка',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-    },
-    {
-        name: 'Холмогорский район',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-    },
-    {
-        name: 'Байкал',
-        link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-    }
-];*/
-
 //Создание шаблона карточки
 const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     //получение копии template элемента 
@@ -99,8 +70,7 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     //удаление элемента галереи
     function deletTemCard() {
         delCard(newGalleryElement);
-        showPopupProfile(popupDeleteCard); //console.log(newGalleryElement.id)
-        //newGalleryElement.remove();
+        showPopupProfile(popupDeleteCard);
         galleryDeletCard.removeEventListener('click', deletTemCard);
     };
     galleryDeletCard.addEventListener('click', deletTemCard);
@@ -115,7 +85,7 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     return newGalleryElement;
 };
 
-
+//удаление карточки с сервера
 function delCard(item) {
     const hoba = item;
     /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
@@ -134,57 +104,6 @@ function delCard(item) {
     }
     document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg);
 }
-/*
-function delServCard(hoba) {
-    
-
-}*/
-/*
-
-    */
-
-/*
-deleteButton.addEventListener('click', (evt) => { //61a8a900ed37330012af131d
-
-    })*/
-//- удаление карточки  - newGalleryElement.remove();
-//evt.target.classList.contains('popup_deleteCard_btn') ||
-/*
-//Создание шаблона карточки
-const userCard = (userLink, userText) => {
-    //получение копии template элемента 
-    const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
-    //получение изображение из копии
-    const galleryImage = newGalleryElement.querySelector('.gallery-element__photo');
-    //получение текста из копии
-    const galleryText = newGalleryElement.querySelector('.gallery-element__caption-name');
-    //Получение лайка в новой карточке
-    const galleryLike = newGalleryElement.querySelector('.gallery-element__caption-like');
-    //получение элемента корзины новой карточки
-    const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
-
-    //получение массива с карточками от сервера 
-    galleryImage.alt = userText;
-    galleryImage.src = userLink;
-    galleryText.textContent = userText;
-    //реакция и замена вида лайка при клике
-    galleryLike.addEventListener('click', function() {
-        galleryLike.classList.toggle('gallery-element__caption-like_active');
-    });
-    //реакция на щелчек по корзине - удаление карточки   
-    galleryDeletCard.addEventListener('click', function() {
-        newGalleryElement.remove();
-    });
-    //реакция на нажатие на изображение и открытие попап
-    galleryImage.addEventListener('click', function() {
-        showPopupProfile(popupPhoto);
-        popupPhotoImage.alt = galleryImage.alt;
-        popupPhotoImage.src = galleryImage.src;
-        popupPhotoName.textContent = galleryText.textContent
-    });
-    return newGalleryElement;
-};
-*/
 //Начало - добавление карточек галереи по умолчанию
 servReq.then((res) => { return res.json(); })
     .then((data) => {
@@ -195,7 +114,7 @@ servReq.then((res) => { return res.json(); })
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText) => {
-        fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
+        const userCard = fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
             method: 'POST',
             headers: {
                 authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
@@ -205,8 +124,16 @@ const createUserCard = (userLink, userText) => {
                 name: userText,
                 link: userLink
             })
+        })
+
+        userCard.then((res) => {
+            if (res.ok) {
+                return res.json()
+            };
+        }).then((data) => {
+            gallery.prepend(createServCard(data.link, data.name, data.likes.length, data.owner._id, data._id));
+
         });
-        gallery.prepend(createServCard(userLink, userText, undefined, myId));
     }
     //Конец - Добавление карточки пользователем
 
