@@ -10,7 +10,19 @@ import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhoto
 import { escPopupClose } from './components/overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './components/modal.js';
+//Импорт запросов
+import { udpdateAvatar } from './components/api.js';
 //Начало - открытие попап
+const profAva = document.querySelector('.profile__avatar');
+profAva.addEventListener('click', () => {
+    showPopupProfile(document.querySelector('.popup_editAvatar'))
+});
+document.querySelector('.popup_editAvatar_btn').addEventListener('click', /**/ () => {
+    const avatarUrl = document.querySelector('#popup_editAvatar').value;
+    closeAllPopup(document.querySelector('.popup_editAvatar'))
+    console.log(avatarUrl);
+    udpdateAvatar(avatarUrl, 'avatar', '', '')
+});
 //все элементы попап
 const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
@@ -43,17 +55,20 @@ popupPhotoClose.addEventListener('click', function() {
 });*/
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-        method: 'PATCH',
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            name: nameInput.value,
-            about: jobInput.value
-        })
-    });
+    /*
+        fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
+            method: 'PATCH',
+            headers: {
+                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                name: nameInput.value,
+                about: jobInput.value
+            })
+        });*/
+
+    udpdateAvatar('', '', nameInput, jobInput);
     popupName.textContent = nameInput.value;
     popupProfession.textContent = jobInput.value;
     closeAllPopup(popupProfile);
@@ -91,6 +106,8 @@ fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
         document.querySelector('.profile__info-profession').textContent = data.about;
         document.querySelector('.profile__avatar').src = data.avatar;
     });
+//
+
 
 /*проба пера
 const myPromise =
