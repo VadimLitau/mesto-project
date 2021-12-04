@@ -156,13 +156,16 @@ function delCard(item) {
 servReq.then((res) => { return res.json(); })
     .then((data) => {
         data.reverse().forEach(function(item) {
-            for (let i = 0; i < item.likes.length; i++) {
-                if (myId === item.likes[i]._id) {
-                    gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, item.likes[i]._id));
-                }
-                gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id));
-            }
-
+            // console.log(item)
+            let bz;
+            item.likes.forEach(function(rrr) {
+                    if (myId === rrr._id) {
+                        return bz = 1;
+                    }
+                    return bz;
+                })
+                /* for (let i = 0; i < item.likes.length; i++) {}*/
+            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, bz));
         })
     });
 //Конец - добавление карточек галереи по умолчанию
