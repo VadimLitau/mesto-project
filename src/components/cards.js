@@ -71,7 +71,7 @@ const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
 //Создание шаблона карточки
-const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
+const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeStatus) => {
 
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
@@ -91,8 +91,9 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     galleryImage.src = servLink;
     galleryText.textContent = servName;
     galleryCounterLikes.textContent = serLike;
-
     newGalleryElement.id = servPhotoId;
+    if (likeStatus) { galleryLike.classList.add('gallery-element__caption-like_active') }
+
 
 
     //реакция и замена вида лайка при клике
@@ -155,7 +156,16 @@ function delCard(item) {
 servReq.then((res) => { return res.json(); })
     .then((data) => {
         data.reverse().forEach(function(item) {
-            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id));
+            // console.log(item)
+            let bz;
+            item.likes.forEach(function(rrr) {
+                    if (myId === rrr._id) {
+                        return bz = 1;
+                    }
+                    return bz;
+                })
+                /* for (let i = 0; i < item.likes.length; i++) {}*/
+            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, bz));
         })
     });
 //Конец - добавление карточек галереи по умолчанию
@@ -201,25 +211,25 @@ fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/', {
     })
     .then((data) => {
         data.forEach((item) => {
-            for (let i = 0; i < item.likes.length; i++) {
-                if (myId === item.likes[i]._id) {
-                    addLik(item.likes._id);
-                }
-            }
-            /* let element = item._id;
-             // console.log(item._id)
-             item.likes.forEach((idLike) => {
-                 if (myId === idLike._id) {
-                     //console.log(element)
-                     addDefoulLike(element)
-                 }
-             })
-
-
+            console.log(item._id)
         })
     });
 
-function addLik(elem) {
-    document.getElementById(elem).classList.add('gallery-element__caption-like_active')
-}
+
+for (let i = 0; i < item.likes.length; i++) {
+            if (myId === item.likes[i]._id) {
+                addLik(item.likes._id);
+            }
+        }
+        let element = item._id;
+        // console.log(item._id)
+        item.likes.forEach((idLike) => {
+            if (myId === idLike._id) {
+                //console.log(element)
+                addDefoulLike(element)
+                document.getElementById(elem).classList.add('gallery-element__caption-like_active')
+            }
+        })
+
+
 */
