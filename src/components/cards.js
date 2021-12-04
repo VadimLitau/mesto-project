@@ -1,5 +1,39 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
 
+const likesServAdd = (item, meth, elem) => {
+    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/likes/' + item, {
+            method: meth, //PUT,DELETE
+            headers: {
+                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => {
+            if (res.ok) {
+                return res.json()
+            }
+        })
+        .then((data) => {
+            elem.textContent = data.likes.length;
+        });
+
+};
+const likesServDelete = (item) => {
+    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/likes/' + item, {
+        method: 'DELETE',
+        headers: {
+            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+            'Content-Type': 'application/json'
+        }
+    })
+};
+const likesServ = (item) => {
+    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/' + item, {
+        headers: {
+            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
+        }
+    });
+}
 const servReq =
     fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
         headers: {
@@ -38,6 +72,7 @@ const popupDeleteCard = document.querySelector('.popup_deleteCard');
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
 //Создание шаблона карточки
 const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
+
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
     //получение изображение из копии
@@ -58,10 +93,21 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId) => {
     galleryCounterLikes.textContent = serLike;
 
     newGalleryElement.id = servPhotoId;
+
+
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
-        galleryLike.classList.toggle('gallery-element__caption-like_active');
+        if (galleryLike.classList.contains('gallery-element__caption-like_active')) {
+            likesServAdd(servPhotoId, 'DELETE', galleryCounterLikes)
+
+            galleryLike.classList.remove('gallery-element__caption-like_active')
+        } else {
+            likesServAdd(servPhotoId, 'PUT', galleryCounterLikes)
+            galleryLike.classList.add('gallery-element__caption-like_active')
+        }
+        //galleryLike.classList.toggle('gallery-element__caption-like_active');
     });
+
     //добавлять или нет элемент корзины на карточку
     if (servId === myId) {
         galleryDeletCard.classList.remove('gallery-element__deletCard_notDelete');
@@ -132,7 +178,7 @@ const createUserCard = (userLink, userText) => {
                 return res.json()
             };
         }).then((data) => {
-            gallery.prepend(createServCard(data.link, data.name, undefined, data.owner._id, data._id));
+            gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
 
         });
     }
@@ -140,3 +186,40 @@ const createUserCard = (userLink, userText) => {
 
 
 export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
+
+/*
+fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/', {
+        headers: {
+            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+            'Content-Type': 'application/json'
+        }
+    })
+    .then((res) => {
+        if (res.ok) {
+            return res.json()
+        }
+    })
+    .then((data) => {
+        data.forEach((item) => {
+            for (let i = 0; i < item.likes.length; i++) {
+                if (myId === item.likes[i]._id) {
+                    addLik(item.likes._id);
+                }
+            }
+            /* let element = item._id;
+             // console.log(item._id)
+             item.likes.forEach((idLike) => {
+                 if (myId === idLike._id) {
+                     //console.log(element)
+                     addDefoulLike(element)
+                 }
+             })
+
+
+        })
+    });
+
+function addLik(elem) {
+    document.getElementById(elem).classList.add('gallery-element__caption-like_active')
+}
+*/

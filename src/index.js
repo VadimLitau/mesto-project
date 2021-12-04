@@ -100,12 +100,10 @@ const myPromise =
         }
     });
 
-let hoba = '';
-
 myPromise.then((res) => { return res.json(); })
     .then((data) => {
         data.forEach(function(item) {
-            console.log(item.name);
+            console.log(item.likes);
         })
     });
     */
