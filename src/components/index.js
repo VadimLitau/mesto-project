@@ -11,7 +11,13 @@ import { escPopupClose } from './overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './modal.js';
 //Импорт запросов
-import { udpdateAvatar } from './api.js';
+import { udpdateAvatar, getUpdateProfile } from './api.js';
+//загрузка с сервера информации профиля(имя, провессия, аватар)
+getUpdateProfile().then((data) => {
+    document.querySelector('.profile__info-name').textContent = data.name;
+    document.querySelector('.profile__info-profession').textContent = data.about;
+    document.querySelector('.profile__avatar').src = data.avatar;
+});;
 //Начало - открытие попап
 const profAva = document.querySelector('.profile__avatar-wrap-edit');
 //Временной интервал попапов
@@ -29,7 +35,9 @@ document.querySelector('.popup_editAvatar_btn').addEventListener('click', () => 
     closeAllPopup(document.querySelector('.popup_editAvatar'), timePopupInterval, document.querySelector('.popup_editAvatar_btn'), 'Сохранение...')
     setTimeout(() => {
         //console.log(avatarUrl);
-        udpdateAvatar(avatarUrl, 'avatar', '', '')
+        udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
+            document.querySelector('.profile__avatar').src = data.avatar;
+        });
     }, timePopupInterval)
 
 });
@@ -59,30 +67,9 @@ popupButtonCreateCard.addEventListener('click', () => {
     document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
     document.querySelector('.popup_AddCard_form-button').type = 'button';
 });
-/*
-//закрытие для попап профиля
-popupClosetButton.addEventListener('click', () => {
 
-    closeAllPopup(popupProfile);
-});
-//закрытие попап показа изображения
-popupPhotoClose.addEventListener('click', function() {
-    popupPhoto.classList.remove('popup_opened');
-});*/
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
-    /*
-        fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-            method: 'PATCH',
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: nameInput.value,
-                about: jobInput.value
-            })
-        });*/
     closeAllPopup(popupProfile, timePopupInterval, document.querySelector('.popup__form-button_profile'), 'Сохранение...');
     setTimeout(() => {
         udpdateAvatar('', '', nameInput, jobInput);
