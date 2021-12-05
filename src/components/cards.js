@@ -1,27 +1,6 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
 import { likesServAdd, userCard, servReq, deleteServCard } from './api.js';
 import { timePopupInterval } from './index.js'
-
-
-/*
-const likesServDelete = (item) => {
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/likes/' + item, {
-        method: 'DELETE',
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-            'Content-Type': 'application/json'
-        }
-    })
-};
-const likesServ = (item) => {
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/' + item, {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-        }
-    });
-}
-*/
-
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -52,7 +31,6 @@ const myId = '3382b6ac0c72abf176e18b90';
 const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
-let delCount = 1;
 
 //Создание шаблона карточки
 const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeStatus) => {
@@ -78,14 +56,14 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         if (galleryLike.classList.contains('gallery-element__caption-like_active')) {
-            likesServAdd(servPhotoId, 'DELETE', galleryCounterLikes)
-
+            likesServAdd(servPhotoId, 'DELETE').then((data) => {
+                galleryCounterLikes.textContent = data.likes.length;
+            });
             galleryLike.classList.remove('gallery-element__caption-like_active')
         } else {
-            likesServAdd(servPhotoId, 'PUT', galleryCounterLikes)
+            likesServAdd(servPhotoId, 'PUT').then((data) => { galleryCounterLikes.textContent = data.likes.length; });
             galleryLike.classList.add('gallery-element__caption-like_active')
         }
-        //galleryLike.classList.toggle('gallery-element__caption-like_active');
     });
 
     //добавлять или нет элемент корзины на карточку
@@ -95,14 +73,16 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
         galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
     }
     //удаление элемента галереи
+    /*
     function deletTemCard() {
-        showPopupProfile(popupDeleteCard);
+        //showPopupProfile(popupDeleteCard);
         delCard(newGalleryElement);
         galleryDeletCard.removeEventListener('click', deletTemCard);
-        //проблема была в том, что слушатель снимался не в том месте
-    };
-    galleryDeletCard.addEventListener('click', deletTemCard);
-
+    };*/
+    galleryDeletCard.addEventListener('click', () => {
+        showPopupProfile(popupDeleteCard);
+        delCard(newGalleryElement);
+    });
 
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
@@ -113,84 +93,49 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     });
     return newGalleryElement;
 };
-//
-
-
 //удаление карточки с сервера
 function delCard(item) {
-    const hoba = item; //эта переменная прекрасна
+    //const ji = document.getElementById(item.id);
+    // console.log(ji);
+    closeAllPopup(popupDeleteCard);
+    item.remove();
+    deleteServCard(item.id);
+    //пусть пока это останется, попробую завтра на свежую голову еще поколдовать
+    //const hoba = item; //эта переменная прекрасна
     /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
-    function gtg() {
-        //console.log(hoba.id)
-        hoba.remove();
-        // console.log('kurwa')
-        closeAllPopup(popupDeleteCard);
-        deleteServCard(hoba.id);
-        document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
-        return delCount = 1;
-    }
-    document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg);
-    return delCount = 1;
+
+    //console.log(hoba.id)
+    //item.remove();
+    // console.log('kurwa')
+    //closeAllPopup(popupDeleteCard);
+    // deleteServCard(item.id);
+    //document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
+
+    //function gtg() { document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg); }
 }
 //Начало - добавление карточек галереи по умолчанию
-servReq();
-/*servReq.then((res) => { return res.json(); })
-    .then((data) => {
-        data.reverse().forEach(function(item) {
-            // console.log(item)
-            let bz;
-            item.likes.forEach(function(rrr) {
-                    if (myId === rrr._id) {
-                        return bz = 1;
-                    }
-                    return bz;
-                })
-                /* for (let i = 0; i < item.likes.length; i++) {}
-            gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, bz));
+servReq().then((data) => {
+    data.reverse().forEach(function(item) {
+        // console.log(item)
+        let elem;
+        item.likes.forEach(function(rrr) {
+            if (myId === rrr._id) {
+                return elem = 1;
+            }
+            return elem;
         })
-    });*/
+        gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, elem));
+    });
+});
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText, time) => {
-
-        userCard(userLink, userText, timePopupInterval)
+        let elem;
+        userCard(userLink, userText, timePopupInterval).then((data) => {
+                return elem = data;
+                //gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
+            })
+            .finally(setTimeout(() => { gallery.prepend(createServCard(elem.link, elem.name, '0', elem.owner._id, elem._id)) }, time));
     }
     //Конец - Добавление карточки пользователем
 export { myId, delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
-
-/*
-fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/', {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-            'Content-Type': 'application/json'
-        }
-    })
-    .then((res) => {
-        if (res.ok) {
-            return res.json()
-        }
-    })
-    .then((data) => {
-        data.forEach((item) => {
-            console.log(item._id)
-        })
-    });
-
-
-for (let i = 0; i < item.likes.length; i++) {
-            if (myId === item.likes[i]._id) {
-                addLik(item.likes._id);
-            }
-        }
-        let element = item._id;
-        // console.log(item._id)
-        item.likes.forEach((idLike) => {
-            if (myId === idLike._id) {
-                //console.log(element)
-                addDefoulLike(element)
-                document.getElementById(elem).classList.add('gallery-element__caption-like_active')
-            }
-        })
-
-
-*/
