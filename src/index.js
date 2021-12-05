@@ -14,14 +14,19 @@ import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupPr
 import { udpdateAvatar } from './components/api.js';
 //Начало - открытие попап
 const profAva = document.querySelector('.profile__avatar');
+//Временной интервал попапов
+const timePopupInterval = 2000;
 profAva.addEventListener('click', () => {
     showPopupProfile(document.querySelector('.popup_editAvatar'))
 });
-document.querySelector('.popup_editAvatar_btn').addEventListener('click', /**/ () => {
+document.querySelector('.popup_editAvatar_btn').addEventListener('click', () => {
     const avatarUrl = document.querySelector('#popup_editAvatar').value;
-    closeAllPopup(document.querySelector('.popup_editAvatar'))
-    console.log(avatarUrl);
-    udpdateAvatar(avatarUrl, 'avatar', '', '')
+    closeAllPopup(document.querySelector('.popup_editAvatar'), timePopupInterval, document.querySelector('.popup_editAvatar_btn'), 'Сохранение...')
+    setTimeout(() => {
+        console.log(avatarUrl);
+        udpdateAvatar(avatarUrl, 'avatar', '', '')
+    }, timePopupInterval)
+
 });
 //все элементы попап
 const popups = document.querySelectorAll('.popup')
@@ -42,6 +47,10 @@ popupInfoButton.addEventListener('click', () => {
 //открытиу попап для добавления карточки
 popupButtonCreateCard.addEventListener('click', () => {
     showPopupProfile(popupCreateNewCard);
+    newCardLink.value = '';
+    newCardText.value = '';
+    document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
+    document.querySelector('.popup_AddCard_form-button').type = 'button';
 });
 /*
 //закрытие для попап профиля
@@ -68,10 +77,13 @@ formElement.addEventListener('submit', function(evt) {
             })
         });*/
 
-    udpdateAvatar('', '', nameInput, jobInput);
-    popupName.textContent = nameInput.value;
-    popupProfession.textContent = jobInput.value;
-    closeAllPopup(popupProfile);
+
+    closeAllPopup(popupProfile, timePopupInterval, document.querySelector('.popup__form-button_profile'), 'Сохранение...');
+    setTimeout(() => {
+        udpdateAvatar('', '', nameInput, jobInput);
+        popupName.textContent = nameInput.value;
+        popupProfession.textContent = jobInput.value;
+    }, timePopupInterval)
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
@@ -81,12 +93,9 @@ popupAddCardClos.addEventListener('click', () => {
 });
 //добавление карточки и закрытие попап
 popupCreateNewCard.addEventListener('submit', function(evt) {
-    closeAllPopup(popupCreateNewCard);
-    createUserCard(newCardLink.value, newCardText.value);
-    newCardLink.value = '';
-    newCardText.value = '';
-    document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
-    document.querySelector('.popup_AddCard_form-button').type = 'button';
+    closeAllPopup(popupCreateNewCard, timePopupInterval, document.querySelector('.popup_AddCard_form-button'), 'Сохранение...');
+    createUserCard(newCardLink.value, newCardText.value, timePopupInterval);
+
     evt.preventDefault();
 });
 //вызов валидации форм

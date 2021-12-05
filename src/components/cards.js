@@ -170,7 +170,7 @@ servReq.then((res) => { return res.json(); })
     });
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
-const createUserCard = (userLink, userText) => {
+const createUserCard = (userLink, userText, time) => {
         const userCard = fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
             method: 'POST',
             headers: {
@@ -182,19 +182,18 @@ const createUserCard = (userLink, userText) => {
                 link: userLink,
             })
         })
-
+        let mn;
         userCard.then((res) => {
-            if (res.ok) {
-                return res.json()
-            };
-        }).then((data) => {
-            gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
-
-        });
+                if (res.ok) {
+                    return res.json()
+                };
+            }).then((data) => {
+                return mn = data;
+                //gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
+            })
+            .finally(setTimeout(() => { gallery.prepend(createServCard(mn.link, mn.name, '0', mn.owner._id, mn._id)) }, time));
     }
     //Конец - Добавление карточки пользователем
-
-
 export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
 
 /*
