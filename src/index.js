@@ -16,6 +16,7 @@ import { udpdateAvatar } from './components/api.js';
 const profAva = document.querySelector('.profile__avatar');
 //Временной интервал попапов
 const timePopupInterval = 2000;
+//действие по клику на аватар
 profAva.addEventListener('click', () => {
     showPopupProfile(document.querySelector('.popup_editAvatar'))
 });
@@ -76,8 +77,6 @@ formElement.addEventListener('submit', function(evt) {
                 about: jobInput.value
             })
         });*/
-
-
     closeAllPopup(popupProfile, timePopupInterval, document.querySelector('.popup__form-button_profile'), 'Сохранение...');
     setTimeout(() => {
         udpdateAvatar('', '', nameInput, jobInput);
@@ -101,35 +100,4 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 //вызов валидации форм
 enableValidation(validParams);
 
-//запросы к серверу
-fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-        }
-    })
-    .then((res) => {
-        return res = res.json();
-    })
-    .then((data) => {
-        document.querySelector('.profile__info-name').textContent = data.name;
-        document.querySelector('.profile__info-profession').textContent = data.about;
-        document.querySelector('.profile__avatar').src = data.avatar;
-    });
-//
-
-
-/*проба пера
-const myPromise =
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-        }
-    });
-
-myPromise.then((res) => { return res.json(); })
-    .then((data) => {
-        data.forEach(function(item) {
-            console.log(item.likes);
-        })
-    });
-    */
+export { timePopupInterval };

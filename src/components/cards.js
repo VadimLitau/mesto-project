@@ -1,23 +1,9 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
+import { likesServAdd, userCard, servReq, deleteServCard } from './api.js';
+import { timePopupInterval } from './../index.js'
 
-const likesServAdd = (item, meth, elem) => {
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/likes/' + item, {
-            method: meth, //PUT,DELETE
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then((res) => {
-            if (res.ok) {
-                return res.json()
-            }
-        })
-        .then((data) => {
-            elem.textContent = data.likes.length;
-        });
 
-};
+/*
 const likesServDelete = (item) => {
     fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/likes/' + item, {
         method: 'DELETE',
@@ -34,12 +20,8 @@ const likesServ = (item) => {
         }
     });
 }
-const servReq =
-    fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-        }
-    });
+*/
+
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -72,7 +54,6 @@ const popupDeleteCard = document.querySelector('.popup_deleteCard');
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
 //Создание шаблона карточки
 const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeStatus) => {
-
     //получение копии template элемента 
     const newGalleryElement = galleryElement.querySelector('.gallery-element__item').cloneNode(true);
     //получение изображение из копии
@@ -85,7 +66,6 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     const galleryDeletCard = newGalleryElement.querySelector('.gallery-element__deletCard');
     //получение элемента счетчика лайков
     const galleryCounterLikes = newGalleryElement.querySelector('.gallery-element__like-counter');
-
     //получение массива с карточками от сервера  
     galleryImage.alt = servName;
     galleryImage.src = servLink;
@@ -93,9 +73,6 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     galleryCounterLikes.textContent = serLike;
     newGalleryElement.id = servPhotoId;
     if (likeStatus) { galleryLike.classList.add('gallery-element__caption-like_active') }
-
-
-
     //реакция и замена вида лайка при клике
     galleryLike.addEventListener('click', function() {
         if (galleryLike.classList.contains('gallery-element__caption-like_active')) {
@@ -135,25 +112,21 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
 
 //удаление карточки с сервера
 function delCard(item) {
-    const hoba = item;
+    const hoba = item; //эта переменная прекрасна
     /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
     function gtg() {
-        console.log(hoba.id)
+        //console.log(hoba.id)
         hoba.remove();
-        console.log('kurwa')
+        // console.log('kurwa')
         closeAllPopup(popupDeleteCard);
-        fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/' + hoba.id, {
-            method: 'DELETE',
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-            },
-        });
+        deleteServCard(hoba.id);
         document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
     }
     document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg);
 }
 //Начало - добавление карточек галереи по умолчанию
-servReq.then((res) => { return res.json(); })
+servReq();
+/*servReq.then((res) => { return res.json(); })
     .then((data) => {
         data.reverse().forEach(function(item) {
             // console.log(item)
@@ -164,37 +137,18 @@ servReq.then((res) => { return res.json(); })
                     }
                     return bz;
                 })
-                /* for (let i = 0; i < item.likes.length; i++) {}*/
+                /* for (let i = 0; i < item.likes.length; i++) {}
             gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, bz));
         })
-    });
+    });*/
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText, time) => {
-        const userCard = fetch('https://nomoreparties.co/v1/plus-cohort-4/cards', {
-            method: 'POST',
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                name: userText,
-                link: userLink,
-            })
-        })
-        let mn;
-        userCard.then((res) => {
-                if (res.ok) {
-                    return res.json()
-                };
-            }).then((data) => {
-                return mn = data;
-                //gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
-            })
-            .finally(setTimeout(() => { gallery.prepend(createServCard(mn.link, mn.name, '0', mn.owner._id, mn._id)) }, time));
+
+        userCard(userLink, userText, timePopupInterval)
     }
     //Конец - Добавление карточки пользователем
-export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
+export { myId, delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
 
 /*
 fetch('https://nomoreparties.co/v1/plus-cohort-4/cards/', {
