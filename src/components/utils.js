@@ -8,10 +8,21 @@ const showPopupProfile = (item) => {
     //document.addEventListener('click', escPopupClose);
 };
 //функция закрытия попапов
-const closeAllPopup = (item) => {
-    item.classList.remove('popup_opened');
+
+const closeAllPopup = (item, time, element, textElement) => {
+    if (time) {
+        element.textContent = textElement;
+        setTimeout(() => {
+            item.classList.remove('popup_opened')
+            return
+        }, time);
+    } else {
+        item.classList.remove('popup_opened')
+    }
+
     document.removeEventListener('keydown', escPopupClose);
-    //document.removeEventListener('click', escPopupClose);
+    //document.removeEventListener('click', escPopupClose);  
+    return
 }
 
 export { showPopupProfile, closeAllPopup };
