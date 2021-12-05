@@ -1,6 +1,6 @@
 import { showPopupProfile, closeAllPopup } from './utils.js';
 import { likesServAdd, userCard, servReq, deleteServCard } from './api.js';
-import { timePopupInterval } from './../index.js'
+import { timePopupInterval } from './index.js'
 
 
 /*
@@ -52,6 +52,8 @@ const myId = '3382b6ac0c72abf176e18b90';
 const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
 const deleteButton = document.querySelector('.popup__deleteCard_btn');
+let delCount = 1;
+
 //Создание шаблона карточки
 const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeStatus) => {
     //получение копии template элемента 
@@ -94,11 +96,13 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     }
     //удаление элемента галереи
     function deletTemCard() {
-        delCard(newGalleryElement);
         showPopupProfile(popupDeleteCard);
+        delCard(newGalleryElement);
         galleryDeletCard.removeEventListener('click', deletTemCard);
+        //проблема была в том, что слушатель снимался не в том месте
     };
     galleryDeletCard.addEventListener('click', deletTemCard);
+
 
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
@@ -109,6 +113,8 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     });
     return newGalleryElement;
 };
+//
+
 
 //удаление карточки с сервера
 function delCard(item) {
@@ -121,8 +127,10 @@ function delCard(item) {
         closeAllPopup(popupDeleteCard);
         deleteServCard(hoba.id);
         document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
+        return delCount = 1;
     }
     document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg);
+    return delCount = 1;
 }
 //Начало - добавление карточек галереи по умолчанию
 servReq();
