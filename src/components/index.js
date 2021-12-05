@@ -1,30 +1,34 @@
 //импорт css файла для webpack
-import './pages/index.css'
+import './../pages/index.css'
 //общий импорт
-import { showPopupProfile, closeAllPopup } from './components/utils.js';
+import { showPopupProfile, closeAllPopup } from './utils.js';
 //импорт валидации форм
-import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './components/validate.js';
+import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './validate.js';
 //импорт добавления карточек
-import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard } from './components/cards.js';
+import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard } from './cards.js';
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
-import { escPopupClose } from './components/overClose.js';
+import { escPopupClose } from './overClose.js';
 //Заполнение полей форм popup
-import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './components/modal.js';
+import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './modal.js';
 //Импорт запросов
-import { udpdateAvatar } from './components/api.js';
+import { udpdateAvatar } from './api.js';
 //Начало - открытие попап
-const profAva = document.querySelector('.profile__avatar');
+const profAva = document.querySelector('.profile__avatar-wrap-edit');
 //Временной интервал попапов
 const timePopupInterval = 2000;
 //действие по клику на аватар
 profAva.addEventListener('click', () => {
-    showPopupProfile(document.querySelector('.popup_editAvatar'))
+    showPopupProfile(document.querySelector('.popup_editAvatar'));
+    document.querySelector('.popup_editAvatar_btn').textContent = 'Сохранить';
+    document.querySelector('.popup_editAvatar_btn').type = 'button';
+    document.querySelector('.popup_editAvatar_btn').classList.add('popup__form-button_disabled');
+    document.querySelector('#popup_editAvatar').value = '';
 });
 document.querySelector('.popup_editAvatar_btn').addEventListener('click', () => {
     const avatarUrl = document.querySelector('#popup_editAvatar').value;
     closeAllPopup(document.querySelector('.popup_editAvatar'), timePopupInterval, document.querySelector('.popup_editAvatar_btn'), 'Сохранение...')
     setTimeout(() => {
-        console.log(avatarUrl);
+        //console.log(avatarUrl);
         udpdateAvatar(avatarUrl, 'avatar', '', '')
     }, timePopupInterval)
 
@@ -43,6 +47,7 @@ popupInfoButton.addEventListener('click', () => {
     showPopupProfile(popupProfile);
     nameInput.value = popupName.textContent;
     jobInput.value = popupProfession.textContent;
+    document.querySelector('.popup__form-button_profile').textContent = 'Сохранить';
 });
 
 //открытиу попап для добавления карточки
@@ -50,6 +55,7 @@ popupButtonCreateCard.addEventListener('click', () => {
     showPopupProfile(popupCreateNewCard);
     newCardLink.value = '';
     newCardText.value = '';
+    document.querySelector('.popup_AddCard_form-button').textContent = 'Создать';
     document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
     document.querySelector('.popup_AddCard_form-button').type = 'button';
 });
@@ -99,5 +105,6 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 });
 //вызов валидации форм
 enableValidation(validParams);
-
+const allDelButn = document.querySelectorAll('.gallery-element__deletCard');
+console.log(allDelButn)
 export { timePopupInterval };

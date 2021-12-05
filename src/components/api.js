@@ -1,6 +1,6 @@
 import { jobInput } from './modal.js';
 import { nameInput, gallery, createServCard, myId } from './cards.js';
-import { timePopupInterval } from './../index.js';
+import { timePopupInterval } from './index.js';
 //запрос на заполнение форм при загрузке страницы
 fetch('https://nomoreparties.co/v1/plus-cohort-4/users/me', {
         headers: {
