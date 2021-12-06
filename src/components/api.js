@@ -16,9 +16,7 @@ function checkResponse(res) {
 //загрузка с сервера информации профиля(имя, провессия, аватар)
 const getUpdateProfile = () => {
     return fetch(`${config.baseUrl}/users/me`, {
-            headers: {
-                authorization: `${config.headers.authorization}`
-            } /*если я пишу в этом месте config.headers, то вижу ошибку с указанием на точку, поэтому пришлось делать так*/
+            headers: config.headers
         })
         .then(checkResponse)
 };
@@ -26,10 +24,7 @@ const getUpdateProfile = () => {
 const udpdateAvatar = (newAvatar, linkrequest, nameIn, jobIn) => {
     return fetch(`${config.baseUrl}/users/me/` + linkrequest, {
             method: 'PATCH',
-            headers: {
-                authorization: `${config.headers.authorization}`,
-                'Content-Type': 'application/json'
-            },
+            headers: config.headers,
             body: JSON.stringify({
                 avatar: newAvatar,
                 name: nameIn.value,
@@ -42,21 +37,15 @@ const udpdateAvatar = (newAvatar, linkrequest, nameIn, jobIn) => {
 const likesServAdd = (item, meth) => {
     return fetch(`${config.baseUrl}/cards/likes/` + item, {
             method: meth, //PUT,DELETE
-            headers: {
-                authorization: `${config.headers.authorization}`,
-                'Content-Type': 'application/json'
-            },
+            headers: config.headers,
         })
         .then(checkResponse)
 };
 //Добавление пользовательской карточки
-const userCard = (userLink, userText) => {
+const addUserCard = (userLink, userText) => {
     return fetch(`${config.baseUrl}/cards`, {
             method: 'POST',
-            headers: {
-                authorization: `${config.headers.authorization}`,
-                'Content-Type': 'application/json'
-            },
+            headers: config.headers,
             body: JSON.stringify({
                 name: userText,
                 link: userLink,
@@ -64,11 +53,9 @@ const userCard = (userLink, userText) => {
         })
         .then(checkResponse)
 };
-const servReq = () => {
+const getServCard = () => {
     return fetch(`${config.baseUrl}/cards/`, {
-            headers: {
-                authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f'
-            }
+            headers: config.headers
         })
         .then(checkResponse)
 };
@@ -76,9 +63,12 @@ const servReq = () => {
 const deleteServCard = (idCard) => {
     return fetch(`${config.baseUrl}/cards/` + idCard, {
         method: 'DELETE',
-        headers: {
-            authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
-        },
+        headers: config.headers,
     }).then(checkResponse)
 }
-export { udpdateAvatar, likesServAdd, userCard, servReq, deleteServCard, getUpdateProfile }
+
+//объединение загрузки карточек и информации профила
+const getDefoultItems = () => {
+    return Promise.all([getUpdateProfile(), getServCard()]);
+}
+export { udpdateAvatar, likesServAdd, addUserCard, getServCard, deleteServCard, getUpdateProfile, getDefoultItems }

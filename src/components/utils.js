@@ -1,7 +1,7 @@
 import { escPopupClose } from "./overClose";
 import { delCard } from "./cards";
 //функция открытия попапов
-const showPopupProfile = (item) => {
+const openPopup = (item) => {
     item.classList.add('popup_opened');
     document.addEventListener('keydown', escPopupClose);
 
@@ -9,9 +9,8 @@ const showPopupProfile = (item) => {
 };
 //функция закрытия попапов
 
-const closeAllPopup = (item, time, element, textElement) => {
+const closePopup = (item, time) => {
     if (time) {
-        element.textContent = textElement;
         setTimeout(() => {
             item.classList.remove('popup_opened')
             return
@@ -25,4 +24,4 @@ const closeAllPopup = (item, time, element, textElement) => {
     return
 }
 
-export { showPopupProfile, closeAllPopup };
+export { openPopup, closePopup };

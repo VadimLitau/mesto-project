@@ -1,7 +1,9 @@
+//получение id пользователя
+//let userId;
 //импорт css файла для webpack
 import './../pages/index.css'
 //общий импорт
-import { showPopupProfile, closeAllPopup } from './utils.js';
+import { openPopup, closePopup } from './utils.js';
 //импорт валидации форм
 import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './validate.js';
 //импорт добавления карточек
@@ -9,89 +11,102 @@ import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhoto
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
 import { escPopupClose } from './overClose.js';
 //Заполнение полей форм popup
-import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput } from './modal.js';
+import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput, popupAvatar, profAva } from './modal.js';
 //Импорт запросов
-import { udpdateAvatar, getUpdateProfile } from './api.js';
+import { udpdateAvatar, getUpdateProfile, getDefoultItems } from './api.js';
+//Находим кнопку редактирования Аватара
+const editAvatar = document.querySelector('.popup_editAvatar_btn');
+//Находим кнопку добавления карточки
+const newUserCard = document.querySelector('.popup_AddCard_form-button');
+//Находим кнопку сохранения данных профиля
+const editProfileInfo = document.querySelector('.popup__form-button_profile');
+//Находим элемент именем профиля
+const profileName = document.querySelector('.profile__info-name');
+//находим элемент с профессией профиля
+const profileProfession = document.querySelector('.profile__info-profession');
+//Находим элемент с аватаром профиля
+const profileAvatar = document.querySelector('.profile__avatar');
 //загрузка с сервера информации профиля(имя, провессия, аватар)
-getUpdateProfile().then((data) => {
-    document.querySelector('.profile__info-name').textContent = data.name;
-    document.querySelector('.profile__info-profession').textContent = data.about;
-    document.querySelector('.profile__avatar').src = data.avatar;
-});;
-//Начало - открытие попап
-const profAva = document.querySelector('.profile__avatar-wrap-edit');
+getDefoultItems().then((data) => {
+    profileName.textContent = data[0].name;
+    profileProfession.textContent = data[0].about;
+    profileAvatar.src = data[0].avatar;
+    //userId = data[0]._id;
+}).catch((err) => { console.log(err) });
 //Временной интервал попапов
 const timePopupInterval = 2000;
 //действие по клику на аватар
 profAva.addEventListener('click', () => {
-    showPopupProfile(document.querySelector('.popup_editAvatar'));
-    document.querySelector('.popup_editAvatar_btn').textContent = 'Сохранить';
-    document.querySelector('.popup_editAvatar_btn').type = 'button';
-    document.querySelector('.popup_editAvatar_btn').classList.add('popup__form-button_disabled');
+    openPopup(popupAvatar);
+    editAvatar.textContent = 'Сохранить';
+    editAvatar.type = 'button';
     document.querySelector('#popup_editAvatar').value = '';
-});
-document.querySelector('.popup_editAvatar_btn').addEventListener('click', () => {
-    const avatarUrl = document.querySelector('#popup_editAvatar').value;
-    closeAllPopup(document.querySelector('.popup_editAvatar'), timePopupInterval, document.querySelector('.popup_editAvatar_btn'), 'Сохранение...')
-    setTimeout(() => {
-        //console.log(avatarUrl);
-        udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
-            document.querySelector('.profile__avatar').src = data.avatar;
-        });
-    }, timePopupInterval)
+    editAvatar.classList.add('popup__form-button_disabled');
 
 });
+//загрузка нового аватара
+editAvatar.addEventListener('click', () => {
+    const avatarUrl = document.querySelector('#popup_editAvatar').value;
+    udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
+            setTimeout(() => { document.querySelector('.profile__avatar').src = data.avatar; }, timePopupInterval)
+        })
+        .catch((err) => { console.log(err) })
+        .finally(closePopup(popupAvatar, timePopupInterval), editAvatar.textContent = 'Сохранение...');
+});
+
 //все элементы попап
 const popups = document.querySelectorAll('.popup')
 popups.forEach((popup) => {
         popup.addEventListener('click', (evt) => {
             if (evt.target.classList.contains('popup__cross') || evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__photo_wrap')) {
-                closeAllPopup(popup)
+                closePopup(popup)
             }
         })
     })
     //открытие popup для профиля
 popupInfoButton.addEventListener('click', () => {
-    showPopupProfile(popupProfile);
+    openPopup(popupProfile);
     nameInput.value = popupName.textContent;
     jobInput.value = popupProfession.textContent;
-    document.querySelector('.popup__form-button_profile').textContent = 'Сохранить';
+    editProfileInfo.textContent = 'Сохранить';
 });
 
 //открытиу попап для добавления карточки
 popupButtonCreateCard.addEventListener('click', () => {
-    showPopupProfile(popupCreateNewCard);
+    openPopup(popupCreateNewCard);
     newCardLink.value = '';
     newCardText.value = '';
-    document.querySelector('.popup_AddCard_form-button').textContent = 'Создать';
-    document.querySelector('.popup_AddCard_form-button').classList.add('popup__form-button_disabled');
-    document.querySelector('.popup_AddCard_form-button').type = 'button';
+    newUserCard.textContent = 'Создать';
+    newUserCard.classList.add('popup__form-button_disabled');
+    newUserCard.type = 'button';
 });
 
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
-    closeAllPopup(popupProfile, timePopupInterval, document.querySelector('.popup__form-button_profile'), 'Сохранение...');
-    setTimeout(() => {
-        udpdateAvatar('', '', nameInput, jobInput);
-        popupName.textContent = nameInput.value;
-        popupProfession.textContent = jobInput.value;
-    }, timePopupInterval)
+    udpdateAvatar('', '', nameInput, jobInput).then((data) => {
+            setTimeout(() => {
+                popupName.textContent = nameInput.value;
+                popupProfession.textContent = jobInput.value;
+            }, timePopupInterval)
+        })
+        .catch((err) => { console.log(err) })
+        .finally(closePopup(popupProfile, timePopupInterval), editProfileInfo.textContent = 'Сохранение...');
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
+/*
 //закрытие для попап Добавления карточки
 popupAddCardClos.addEventListener('click', () => {
-    closeAllPopup(popupCreateNewCard);
+    closePopup(popupCreateNewCard);
 });
+*/
 //добавление карточки и закрытие попап
 popupCreateNewCard.addEventListener('submit', function(evt) {
-    closeAllPopup(popupCreateNewCard, timePopupInterval, document.querySelector('.popup_AddCard_form-button'), 'Сохранение...');
-    createUserCard(newCardLink.value, newCardText.value, timePopupInterval);
+    createUserCard(newCardLink.value, newCardText.value, timePopupInterval)
 
     evt.preventDefault();
 });
-//вызов валидации форм
 enableValidation(validParams);
-const allDelButn = document.querySelectorAll('.gallery-element__deletCard');
-console.log(allDelButn)
-export { timePopupInterval };
+
+//console.log(userId)
+export { timePopupInterval, newUserCard };
