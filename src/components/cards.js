@@ -1,6 +1,7 @@
-import { showPopupProfile, closeAllPopup } from './utils.js';
-import { likesServAdd, userCard, servReq, deleteServCard } from './api.js';
-import { timePopupInterval } from './index.js'
+import { openPopup, closePopup } from './utils.js';
+import { likesServAdd, addUserCard, deleteServCard, getDefoultItems } from './api.js';
+import { timePopupInterval, newUserCard } from './index.js'
+let userId; //если объявить эту переменную здесь и получать информацию из запроса о карточках, то все работает нормально. Если ее объявить в индексе, то передать сюда достаточно сложно, простого способа я не нашел, а то как делал, давало результат 50/50
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -25,8 +26,6 @@ const popupPhotoImage = document.querySelector('.popup__photo-image');
 const popupPhotoName = document.querySelector('.popup__photo-name');
 //получение элемента для закрытие попап показа изображения
 const popupPhotoClose = document.querySelector('.popup_photo_cross');
-//мой id
-const myId = '3382b6ac0c72abf176e18b90';
 //попап удаления карточки
 const popupDeleteCard = document.querySelector('.popup_deleteCard');
 //Начало - добавление элемента галлереи
@@ -58,16 +57,20 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
         if (galleryLike.classList.contains('gallery-element__caption-like_active')) {
             likesServAdd(servPhotoId, 'DELETE').then((data) => {
                 galleryCounterLikes.textContent = data.likes.length;
-            });
-            galleryLike.classList.remove('gallery-element__caption-like_active')
+                galleryLike.classList.remove('gallery-element__caption-like_active')
+            }).catch((err) => { console.log(err) });
         } else {
-            likesServAdd(servPhotoId, 'PUT').then((data) => { galleryCounterLikes.textContent = data.likes.length; });
-            galleryLike.classList.add('gallery-element__caption-like_active')
+            likesServAdd(servPhotoId, 'PUT').then((data) => {
+                galleryCounterLikes.textContent = data.likes.length;
+                galleryLike.classList.add('gallery-element__caption-like_active')
+            }).catch((err) => { console.log(err) }); //очень полезно, я ведь изначально ставил их, а потом зачем-то убрал о_О
         }
     });
 
     //добавлять или нет элемент корзины на карточку
-    if (servId === myId) {
+    //console.log('servif ' + servId);
+    //console.log('userId ' + userId);
+    if (servId === userId) {
         galleryDeletCard.classList.remove('gallery-element__deletCard_notDelete');
     } else {
         galleryDeletCard.classList.add('gallery-element__deletCard_notDelete');
@@ -75,18 +78,18 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
     //удаление элемента галереи
     /*
     function deletTemCard() {
-        //showPopupProfile(popupDeleteCard);
+        //openPopup(popupDeleteCard);
         delCard(newGalleryElement);
         galleryDeletCard.removeEventListener('click', deletTemCard);
     };*/
     galleryDeletCard.addEventListener('click', () => {
-        showPopupProfile(popupDeleteCard);
+        //openPopup(popupDeleteCard);
         delCard(newGalleryElement);
     });
 
     //реакция на нажатие на изображение и открытие попап
     galleryImage.addEventListener('click', function() {
-        showPopupProfile(popupPhoto);
+        openPopup(popupPhoto);
         popupPhotoImage.alt = galleryImage.alt;
         popupPhotoImage.src = galleryImage.src;
         popupPhotoName.textContent = galleryText.textContent;
@@ -97,45 +100,45 @@ const createServCard = (servLink, servName, serLike, servId, servPhotoId, likeSt
 function delCard(item) {
     //const ji = document.getElementById(item.id);
     // console.log(ji);
-    closeAllPopup(popupDeleteCard);
-    item.remove();
-    deleteServCard(item.id);
-    //пусть пока это останется, попробую завтра на свежую голову еще поколдовать
-    //const hoba = item; //эта переменная прекрасна
-    /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
+
+    deleteServCard(item.id).then((data) => {
+            //closePopup(popupDeleteCard);
+            item.remove();
+        }).catch((err) => { console.log(err) })
+        //пусть пока это останется, попробую завтра на свежую голову еще поколдовать
+        //const hoba = item; //эта переменная прекрасна
+        /*я потратил 12 часов чтобы эта херня заработала, завтра же распечатаю этот кусок кода и сожгу к чертям, гори в аду >< */
 
     //console.log(hoba.id)
     //item.remove();
     // console.log('kurwa')
-    //closeAllPopup(popupDeleteCard);
+    //closePopup(popupDeleteCard);
     // deleteServCard(item.id);
     //document.querySelector('.popup__deleteCard_btn').removeEventListener('click', gtg);
 
     //function gtg() { document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg); }
 }
 //Начало - добавление карточек галереи по умолчанию
-servReq().then((data) => {
-    data.reverse().forEach(function(item) {
-        // console.log(item)
+getDefoultItems().then((data) => {
+    userId = data[0]._id;
+    data[1].reverse().forEach(function(item) {
         let elem;
         item.likes.forEach(function(rrr) {
-            if (myId === rrr._id) {
+            if (userId === rrr._id) {
                 return elem = 1;
             }
             return elem;
         })
         gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, elem));
     });
-});
+}).catch((err) => { console.log(err) });
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
 const createUserCard = (userLink, userText, time) => {
-        let elem;
-        userCard(userLink, userText, timePopupInterval).then((data) => {
-                return elem = data;
-                //gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
-            })
-            .finally(setTimeout(() => { gallery.prepend(createServCard(elem.link, elem.name, '0', elem.owner._id, elem._id)) }, time));
+        addUserCard(userLink, userText, timePopupInterval).then((data) => {
+                setTimeout(() => { gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id)) }, time);
+            }).catch((err) => { console.log(err) })
+            .finally(closePopup(popupCreateNewCard, timePopupInterval, newUserCard.textContent = 'Сохранение...'));
     }
     //Конец - Добавление карточки пользователем
-export { myId, delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
+export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };

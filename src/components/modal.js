@@ -11,5 +11,9 @@ const popupClosetButton = document.querySelector('.popup__cross');
 //сам попап профиля
 const popupProfile = document.querySelector('.popup_profile');
 const jobInput = document.querySelector('#popup__idProfession');
+//попап редактирования аватара
+const popupAvatar = document.querySelector('.popup_editAvatar');
+//Начало - открытие попап
+const profAva = document.querySelector('.profile__avatar-wrap-edit');
 
-export { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput };
+export { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput, popupAvatar, profAva };
