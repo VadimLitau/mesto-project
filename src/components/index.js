@@ -93,14 +93,14 @@ popupButtonCreateCard.addEventListener('click', () => {
 
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
+    editProfileInfo.textContent = 'Сохранение...' // можно устраивать конкурс на самого внимательного человека)
     udpdateAvatar('', '', nameInput, jobInput).then((data) => {
-            editProfileInfo.textContent = 'Сохранить'
             popupName.textContent = nameInput.value
             popupProfession.textContent = jobInput.value
             closePopup(popupProfile)
         })
         .catch((err) => { console.log(err) })
-        .finally(() => editProfileInfo.textContent = 'Сохранение...'); //моя "внимательность" поражает меня самого
+        .finally(() => editProfileInfo.textContent = 'Сохранить'); //моя "внимательность" поражает меня самого
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
