@@ -63,7 +63,7 @@ editAvatar.addEventListener('click', () => {
             closePopup(popupAvatar)
         })
         .catch((err) => { console.log(err) })
-        .finally(editAvatar.textContent = 'Сохранить');
+        .finally(() => editAvatar.textContent = 'Сохранить'); //Спасибо за вашу работу и подсказки =)
 });
 
 //все элементы попап
@@ -100,7 +100,7 @@ formElement.addEventListener('submit', function(evt) {
             closePopup(popupProfile)
         })
         .catch((err) => { console.log(err) })
-        .finally(editProfileInfo.textContent = 'Сохранение...');
+        .finally(() => editProfileInfo.textContent = 'Сохранение...'); //моя "внимательность" поражает меня самого
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
