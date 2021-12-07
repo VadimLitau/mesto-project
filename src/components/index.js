@@ -1,5 +1,5 @@
 //получение id пользователя
-//let userId;
+let userId;
 //импорт css файла для webpack
 import './../pages/index.css'
 //общий импорт
@@ -13,7 +13,7 @@ import { escPopupClose } from './overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput, popupAvatar, profAva } from './modal.js';
 //Импорт запросов
-import { udpdateAvatar, getUpdateProfile, getDefoultItems } from './api.js';
+import { udpdateAvatar, getDefaultItems } from './api.js';
 //Находим кнопку редактирования Аватара
 const editAvatar = document.querySelector('.popup_editAvatar_btn');
 //Находим кнопку добавления карточки
@@ -26,19 +26,29 @@ const profileName = document.querySelector('.profile__info-name');
 const profileProfession = document.querySelector('.profile__info-profession');
 //Находим элемент с аватаром профиля
 const profileAvatar = document.querySelector('.profile__avatar');
-//загрузка с сервера информации профиля(имя, провессия, аватар)
-getDefoultItems().then((data) => {
-    profileName.textContent = data[0].name;
-    profileProfession.textContent = data[0].about;
-    profileAvatar.src = data[0].avatar;
-    //userId = data[0]._id;
+//загрузка с сервера информации профиля(имя, провессия, аватар, карточки)
+getDefaultItems().then(([data, cards]) => {
+    userId = data._id
+    profileName.textContent = data.name;
+    profileProfession.textContent = data.about;
+    profileAvatar.src = data.avatar;
+    cards.reverse().forEach(function(item) {
+        let elem;
+        item.likes.forEach(function(card) {
+            if (userId === card._id) {
+                return elem = 1;
+            }
+            return elem;
+        })
+        gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, elem));
+    });
 }).catch((err) => { console.log(err) });
+
 //Временной интервал попапов
 const timePopupInterval = 2000;
 //действие по клику на аватар
 profAva.addEventListener('click', () => {
     openPopup(popupAvatar);
-    editAvatar.textContent = 'Сохранить';
     editAvatar.type = 'button';
     document.querySelector('#popup_editAvatar').value = '';
     editAvatar.classList.add('popup__form-button_disabled');
@@ -47,11 +57,13 @@ profAva.addEventListener('click', () => {
 //загрузка нового аватара
 editAvatar.addEventListener('click', () => {
     const avatarUrl = document.querySelector('#popup_editAvatar').value;
+    editAvatar.textContent = 'Сохранение...'
     udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
-            setTimeout(() => { document.querySelector('.profile__avatar').src = data.avatar; }, timePopupInterval)
+            document.querySelector('.profile__avatar').src = data.avatar;
+            closePopup(popupAvatar)
         })
         .catch((err) => { console.log(err) })
-        .finally(closePopup(popupAvatar, timePopupInterval), editAvatar.textContent = 'Сохранение...');
+        .finally(editAvatar.textContent = 'Сохранить');
 });
 
 //все элементы попап
@@ -68,7 +80,6 @@ popupInfoButton.addEventListener('click', () => {
     openPopup(popupProfile);
     nameInput.value = popupName.textContent;
     jobInput.value = popupProfession.textContent;
-    editProfileInfo.textContent = 'Сохранить';
 });
 
 //открытиу попап для добавления карточки
@@ -76,7 +87,6 @@ popupButtonCreateCard.addEventListener('click', () => {
     openPopup(popupCreateNewCard);
     newCardLink.value = '';
     newCardText.value = '';
-    newUserCard.textContent = 'Создать';
     newUserCard.classList.add('popup__form-button_disabled');
     newUserCard.type = 'button';
 });
@@ -84,13 +94,13 @@ popupButtonCreateCard.addEventListener('click', () => {
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
     udpdateAvatar('', '', nameInput, jobInput).then((data) => {
-            setTimeout(() => {
-                popupName.textContent = nameInput.value;
-                popupProfession.textContent = jobInput.value;
-            }, timePopupInterval)
+            editProfileInfo.textContent = 'Сохранить'
+            popupName.textContent = nameInput.value
+            popupProfession.textContent = jobInput.value
+            closePopup(popupProfile)
         })
         .catch((err) => { console.log(err) })
-        .finally(closePopup(popupProfile, timePopupInterval), editProfileInfo.textContent = 'Сохранение...');
+        .finally(editProfileInfo.textContent = 'Сохранение...');
     evt.preventDefault();
 });
 //Конец - ввод в попап и сохранение на странице
@@ -109,4 +119,4 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 enableValidation(validParams);
 
 //console.log(userId)
-export { timePopupInterval, newUserCard };
+export { timePopupInterval, newUserCard, userId };

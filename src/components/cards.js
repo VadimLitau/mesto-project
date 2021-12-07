@@ -1,7 +1,7 @@
 import { openPopup, closePopup } from './utils.js';
 import { likesServAdd, addUserCard, deleteServCard, getDefoultItems } from './api.js';
-import { timePopupInterval, newUserCard } from './index.js'
-let userId; //если объявить эту переменную здесь и получать информацию из запроса о карточках, то все работает нормально. Если ее объявить в индексе, то передать сюда достаточно сложно, простого способа я не нашел, а то как делал, давало результат 50/50
+import { timePopupInterval, newUserCard, userId } from './index.js'
+//let userId; //если объявить эту переменную здесь и получать информацию из запроса о карточках, то все работает нормально. Если ее объявить в индексе, то передать сюда достаточно сложно, простого способа я не нашел, а то как делал, давало результат 50/50
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
@@ -119,6 +119,7 @@ function delCard(item) {
     //function gtg() { document.querySelector('.popup__deleteCard_btn').addEventListener('click', gtg); }
 }
 //Начало - добавление карточек галереи по умолчанию
+/*
 getDefoultItems().then((data) => {
     userId = data[0]._id;
     data[1].reverse().forEach(function(item) {
@@ -132,13 +133,16 @@ getDefoultItems().then((data) => {
         gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, elem));
     });
 }).catch((err) => { console.log(err) });
+*/
 //Конец - добавление карточек галереи по умолчанию
 //Начало - Добавление карточки пользователем
-const createUserCard = (userLink, userText, time) => {
+const createUserCard = (userLink, userText) => {
+        newUserCard.textContent = 'Сохранить...'
         addUserCard(userLink, userText, timePopupInterval).then((data) => {
-                setTimeout(() => { gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id)) }, time);
+                gallery.prepend(createServCard(data.link, data.name, '0', data.owner._id, data._id));
+                closePopup(popupCreateNewCard);
             }).catch((err) => { console.log(err) })
-            .finally(closePopup(popupCreateNewCard, timePopupInterval, newUserCard.textContent = 'Сохранение...'));
+            .finally(() => newUserCard.textContent = 'Создать');
     }
     //Конец - Добавление карточки пользователем
 export { delCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard };
