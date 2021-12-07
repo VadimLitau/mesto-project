@@ -68,7 +68,7 @@ const deleteServCard = (idCard) => {
 }
 
 //объединение загрузки карточек и информации профила
-const getDefoultItems = () => {
+const getDefaultItems = () => {
     return Promise.all([getUpdateProfile(), getServCard()]);
 }
-export { udpdateAvatar, likesServAdd, addUserCard, getServCard, deleteServCard, getUpdateProfile, getDefoultItems }
+export { udpdateAvatar, likesServAdd, addUserCard, getServCard, deleteServCard, getUpdateProfile, getDefaultItems }
