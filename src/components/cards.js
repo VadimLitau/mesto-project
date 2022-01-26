@@ -2,6 +2,9 @@ import { openPopup, closePopup } from './utils.js';
 import { likesServAdd, addUserCard, deleteServCard, getDefoultItems } from './api.js';
 import { timePopupInterval, newUserCard, userId } from './index.js'
 //let userId; //если объявить эту переменную здесь и получать информацию из запроса о карточках, то все работает нормально. Если ее объявить в индексе, то передать сюда достаточно сложно, простого способа я не нашел, а то как делал, давало результат 50/50
+
+//Вадим - врединка
+
 //попап добавления карточки
 const popupCreateNewCard = document.querySelector('.popup_AddCard');
 //нашли кнопку открытия popup добавления карточки
