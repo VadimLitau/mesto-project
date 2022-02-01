@@ -4,7 +4,7 @@ import { popupPhoto } from './cards.js';
 function escPopupClose(evt) {
     if (evt.key === 'Escape') {
         const openedPopup = document.querySelector('.popup_opened');
-        closePopup(openedPopup)
+        // closePopup(openedPopup)
     }
 }
 export { escPopupClose };

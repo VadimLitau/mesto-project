@@ -7,13 +7,33 @@ import { openPopup, closePopup } from './utils.js';
 //импорт валидации форм
 import { validParams, showInputError, hideInputError, isValid, setEventListeners, enableValidation, hasInvalidInput, toggleButtonState } from './validate.js';
 //импорт добавления карточек
-import { delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard } from './cards.js';
+import { DefaultCard, delServCard, popupDeleteCard, deleteButton, popupPhotoImage, popupPhotoName, popupPhotoClose, popupPhoto, gallery, popupCreateNewCard, popupButtonCreateCard, popupAddCardClos, galleryElement, formElement, nameInput, newCardText, newCardLink, createServCard, createUserCard } from './cards.js';
 //импорт закрытие попап по щелчку на оверлее или нажати на esc
 import { escPopupClose } from './overClose.js';
 //Заполнение полей форм popup
 import { popupName, popupProfession, popupInfoButton, popupClosetButton, popupProfile, jobInput, popupAvatar, profAva } from './modal.js';
 //Импорт запросов
-import { udpdateAvatar, getDefaultItems } from './api.js';
+import Card from './cards.js'
+import Section from './Section.js'
+//import { udpdateAvatar } from './api.js';
+import Api from './api.js';
+import Popup from './Popup.js';
+import PopupWithImage from './PopupWithImage.js';
+//
+
+const test = new Popup('.popup_AddCard')
+    //test.open();
+    //test.setEventListeners();
+    //Дефолтный запрос к серверу
+const api = new Api({
+    baseUrl: 'https://nomoreparties.co/v1/plus-cohort-4',
+    headers: {
+        authorization: '69b55c42-ee88-4348-a639-420f0f40fb4f',
+        'Content-Type': 'application/json'
+    }
+});
+//const myId = api.getUpdateProfile().then((data) => { return userId = data._id });
+//console.log(userId)
 //Находим кнопку редактирования Аватара
 const editAvatar = document.querySelector('.popup_editAvatar_btn');
 //Находим кнопку добавления карточки
@@ -27,21 +47,24 @@ const profileProfession = document.querySelector('.profile__info-profession');
 //Находим элемент с аватаром профиля
 const profileAvatar = document.querySelector('.profile__avatar');
 //загрузка с сервера информации профиля(имя, провессия, аватар, карточки)
-getDefaultItems().then(([data, cards]) => {
-    userId = data._id
+api.getDefaultItems().then(([data, cards]) => {
     profileName.textContent = data.name;
     profileProfession.textContent = data.about;
     profileAvatar.src = data.avatar;
-    cards.reverse().forEach(function(item) {
-        let elem;
-        item.likes.forEach(function(card) {
-            if (userId === card._id) {
-                return elem = 1;
-            }
-            return elem;
-        })
-        gallery.prepend(createServCard(item.link, item.name, item.likes.length, item.owner._id, item._id, elem));
-    });
+
+    const defaultCardList = new Section({
+        data: cards,
+        renderer: (items) => {
+            const cards = new DefaultCard(items, '#photo-gallery__element', data._id);
+            const cardElement = cards.generate();
+            defaultCardList.setItem(cardElement);
+            cards.addDefaultLike();
+            cards.addDeleteButton();
+            cards.handleCardClick();
+        }
+    }, '.gallery-element');
+    defaultCardList.addItems();
+
 }).catch((err) => { console.log(err) });
 
 //Временной интервал попапов
@@ -58,7 +81,7 @@ profAva.addEventListener('click', () => {
 editAvatar.addEventListener('click', () => {
     const avatarUrl = document.querySelector('#popup_editAvatar').value;
     editAvatar.textContent = 'Сохранение...'
-    udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
+    api.udpdateAvatar(avatarUrl, 'avatar', '', '').then((data) => {
             document.querySelector('.profile__avatar').src = data.avatar;
             closePopup(popupAvatar)
         })
@@ -94,7 +117,7 @@ popupButtonCreateCard.addEventListener('click', () => {
 //Начало - ввод в попап и сохранение на странице
 formElement.addEventListener('submit', function(evt) {
     editProfileInfo.textContent = 'Сохранение...' // можно устраивать конкурс на самого внимательного человека)
-    udpdateAvatar('', '', nameInput, jobInput).then((data) => {
+    api.udpdateAvatar('', '', nameInput, jobInput).then((data) => {
             popupName.textContent = nameInput.value
             popupProfession.textContent = jobInput.value
             closePopup(popupProfile)
@@ -119,4 +142,4 @@ popupCreateNewCard.addEventListener('submit', function(evt) {
 enableValidation(validParams);
 
 //console.log(userId)
-export { timePopupInterval, newUserCard, userId };
+export { timePopupInterval, newUserCard, userId, api };
